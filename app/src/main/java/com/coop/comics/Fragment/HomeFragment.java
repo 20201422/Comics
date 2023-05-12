@@ -1,17 +1,18 @@
 package com.coop.comics.Fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import androidx.viewpager.widget.ViewPager;
-import com.coop.comics.Activity.ComicActivity;
-import com.coop.comics.Activity.MainActivity;
-import com.coop.comics.ComicAdapter;
-import com.coop.comics.Model.ComicData;
+import com.coop.comics.Adapter.BookAdapter;
+import com.coop.comics.Model.Book;
 import com.coop.comics.R;
 
 import java.util.ArrayList;
@@ -23,20 +24,34 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
-    
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    
+
+    private List<Book> books = new ArrayList<>();
+
     public HomeFragment() {
         // Required empty public constructor
     }
-    
+
+    public HomeFragment(List<Book> books) {
+        this.books = books;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -54,7 +69,7 @@ public class HomeFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,21 +78,32 @@ public class HomeFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-    
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        
-        Button button = view.findViewById(R.id.button);
-        button.setOnClickListener(view1 -> {
+
+        if (books != null) {    // 解决数据重复的问题
+            books.clear();
+        }
+
+        books.add(new Book(1, "三体", R.mipmap.whwojx));
+        books.add(new Book(2, "哈利波特", R.mipmap.whwojx));
+        books.add(new Book(3, "沙丘", R.mipmap.whwojx));
+        books.add(new Book(4, "安德的游戏", R.mipmap.whwojx));
+
+        GridView gridView = view.findViewById(R.id.home_books);
+        gridView.setAdapter(new BookAdapter(books, requireContext()));
+
+        gridView.setOnItemClickListener((adapterView, view1, i, l) -> {
             Intent intent = new Intent("com.coop.comics.Activity.ComicActivity");
-            
-            // 启动 DetailActivity
-            startActivity(intent);
+            intent.putExtra("bookId", books.get(i).getId());  // 传输bookId
+
+            startActivity(intent);  // 启动 ComicActivity
         });
-        
+
         return view;
     }
 }

@@ -13,14 +13,16 @@ public class ComicData {
     private int imageResId;
     private String title;
     private String summary;
+    private int page;
     
     public ComicData() {
     }
     
-    public ComicData(int imageResId, String title, String summary) {
+    public ComicData(int imageResId, String title, String summary, int page) {
         this.imageResId = imageResId;
         this.title = title;
         this.summary = summary;
+        this.page = page;
     }
     
     public int getImageResId() {
@@ -45,6 +47,14 @@ public class ComicData {
     
     public void setSummary(String summary) {
         this.summary = summary;
+    }
+    
+    public int getPage() {
+        return page;
+    }
+    
+    public void setPage(int page) {
+        this.page = page;
     }
 }
 

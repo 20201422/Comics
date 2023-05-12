@@ -6,16 +6,11 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-import com.coop.comics.ComicAdapter;
 import com.coop.comics.Fragment.BookmarkFragment;
 import com.coop.comics.Fragment.CollectionFragment;
 import com.coop.comics.Fragment.HomeFragment;
-import com.coop.comics.Model.ComicData;
 import com.coop.comics.R;
 import com.google.android.material.tabs.TabLayout;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     
