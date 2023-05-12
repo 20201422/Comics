@@ -6,7 +6,7 @@
  * freedom is the oxygen of the soul.
  **/
 
-package com.coop.comics;
+package com.coop.comics.Adapter;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -30,9 +30,12 @@ public class ComicAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         ComicFragment fragment = new ComicFragment();
         Bundle args = new Bundle();
-        args.putInt("imageResId", comicData.get(position).getImageResId());
-        args.putString("title", comicData.get(position).getTitle());
-        args.putString("summary", comicData.get(position).getSummary());
+        
+        args.putInt("imageResId", comicData.get(position).getImageResId()); // 获取图像并利用Bundle传送
+        args.putString("title", comicData.get(position).getTitle());    // 获取标题并利用Bundle传送
+        args.putString("summary", comicData.get(position).getSummary());    // 获取内容并利用Bundle传送
+        args.putInt("page", comicData.get(position).getPage()); // 获取页数并利用Bundle传送
+        args.putInt("sumPages", getCount() - 2);
         fragment.setArguments(args);
         
         return fragment;
