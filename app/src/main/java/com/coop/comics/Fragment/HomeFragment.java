@@ -1,7 +1,10 @@
 package com.coop.comics.Fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.AdapterView;
@@ -12,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.coop.comics.Adapter.BookAdapter;
+import com.coop.comics.Dao.BookDao;
+import com.coop.comics.Dao.CreateDB;
 import com.coop.comics.Model.Book;
 import com.coop.comics.R;
 
@@ -33,6 +38,7 @@ public class HomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private SQLiteDatabase db;
 
     private List<Book> books = new ArrayList<>();
 
@@ -40,8 +46,8 @@ public class HomeFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public HomeFragment(List<Book> books) {
-        this.books = books;
+    public HomeFragment(SQLiteDatabase db) {
+        this.db = db;
     }
 
     public List<Book> getBooks() {
@@ -89,10 +95,13 @@ public class HomeFragment extends Fragment {
             books.clear();
         }
 
-        books.add(new Book(1, "三体", R.mipmap.whwojx));
-        books.add(new Book(2, "哈利波特", R.mipmap.whwojx));
-        books.add(new Book(3, "沙丘", R.mipmap.whwojx));
-        books.add(new Book(4, "安德的游戏", R.mipmap.whwojx));
+        books = new BookDao().queryBooks(db);
+
+
+//        books.add(new Book(1, "三体", R.mipmap.whwojx));
+//        books.add(new Book(2, "哈利波特", R.mipmap.whwojx));
+//        books.add(new Book(3, "沙丘", R.mipmap.whwojx));
+//        books.add(new Book(4, "安德的游戏", R.mipmap.whwojx));
 
         GridView gridView = view.findViewById(R.id.home_books);
         gridView.setAdapter(new BookAdapter(books, requireContext()));

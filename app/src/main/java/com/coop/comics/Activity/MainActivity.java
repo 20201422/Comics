@@ -2,10 +2,16 @@ package com.coop.comics.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
+import com.coop.comics.Dao.BookDao;
+import com.coop.comics.Dao.CreateDB;
 import com.coop.comics.Fragment.BookmarkFragment;
 import com.coop.comics.Fragment.CollectionFragment;
 import com.coop.comics.Fragment.HomeFragment;
@@ -16,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     
     private ViewPager viewPager;
     private TabLayout tabLayout;
+    private SQLiteDatabase db;
     
     public MainActivity() {
     }
@@ -45,7 +52,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+
+        db = new CreateDB(this).getDb();
+        BookDao bookDao = new BookDao();
+        Cursor results = db.query("book",null,null,null,null,null,null);
+        if(results.getCount()==0)
+            db = bookDao.initBook(db);   //初始化数据库
+
         viewPager = findViewById(R.id.view_pager);
         tabLayout = findViewById(R.id.tab_layout);
         
@@ -69,7 +82,9 @@ public class MainActivity extends AppCompatActivity {
                         return new BookmarkFragment();
                     case 0:
                     default:
-                        return new HomeFragment();
+                        return new HomeFragment(db);
+
+
                 }
             }
             
