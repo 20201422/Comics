@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 定义按钮的背景形状 -->
+    <item>
+        <shape>
+            <solid android:color="#ECECEC" /> <!-- 设置按钮的填充颜色 -->
+            <corners android:radius="500dp" /> <!-- 设置按钮的圆角半径，这里设置为按钮宽度的一半 -->
+        </shape>
+    </item>
+    <!-- 添加图标 -->
+    <item android:drawable="@drawable/bookmark_svg"
+          android:gravity="center" /> <!-- 设置图标居中 -->
+</layer-list>
