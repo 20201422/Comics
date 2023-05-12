@@ -109,7 +109,6 @@ public class HomeFragment extends Fragment {
         gridView.setOnItemClickListener((adapterView, view1, i, l) -> {
             Intent intent = new Intent("com.coop.comics.Activity.ComicActivity");
             intent.putExtra("bookId", books.get(i).getId());  // 传输bookId
-
             startActivity(intent);  // 启动 ComicActivity
         });
 

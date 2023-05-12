@@ -15,10 +15,11 @@ public class CreateDB extends SQLiteOpenHelper {
             ",book_name text" +
             ",book_photo integer)";
     private static final String dbCreatePages="create table pages(" +
-            "id integer primary key autoincrement" +
-            ",book_id integer" +
-            ",page_id integer" +
-            ",content text)";
+            "imageResId integer " +
+            ",bookId integer" +
+            ",title text" +
+            ",summary text" +
+            ",page int)";
     private static final String dbCreateCollection = "create table collection(" +
             "id integer primary key autoincrement" +
             ",book_id integer" +

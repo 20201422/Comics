@@ -11,20 +11,22 @@ package com.coop.comics.Model;
 public class ComicData {
     
     private int imageResId;
+    private int bookId;
     private String title;
     private String summary;
     private int page;
     
     public ComicData() {
     }
-    
-    public ComicData(int imageResId, String title, String summary, int page) {
+
+    public ComicData(int imageResId, int bookId, String title, String summary, int page) {
         this.imageResId = imageResId;
+        this.bookId = bookId;
         this.title = title;
         this.summary = summary;
         this.page = page;
     }
-    
+
     public int getImageResId() {
         return imageResId;
     }
@@ -32,7 +34,15 @@ public class ComicData {
     public void setImageResId(int imageResId) {
         this.imageResId = imageResId;
     }
-    
+
+    public int getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
+    }
+
     public String getTitle() {
         return title;
     }
