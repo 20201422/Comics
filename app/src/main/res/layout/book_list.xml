@@ -9,7 +9,6 @@
             android:layout_width="100dp"
             android:layout_height="150dp"
             android:id="@+id/book_image"
-            android:src="@mipmap/whwojx"
             app:riv_corner_radius="4dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
