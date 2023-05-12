@@ -11,36 +11,59 @@
             android:layout_weight="1"
             android:scaleType="centerCrop" tools:ignore="MissingConstraints"
             app:layout_constraintBottom_toTopOf="@+id/title_view"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginStart="24dp" android:layout_marginEnd="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
             app:riv_corner_radius_bottom_left="13dp"
             app:riv_corner_radius_bottom_right="13dp"
             app:riv_corner_radius_top_left="13dp"
-            app:riv_corner_radius_top_right="13dp" app:layout_constraintTop_toTopOf="parent"/>
+            app:riv_corner_radius_top_right="13dp"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="38dp"/>
 
     <TextView
+            android:text=""
             android:id="@+id/title_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:textAppearanceLarge"
             android:textStyle="bold"
             android:padding="16dp" tools:ignore="MissingConstraints"
-            android:layout_marginBottom="6dp"
-            app:layout_constraintBottom_toTopOf="@+id/summary_view" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="24dp"
-            app:layout_constraintTop_toBottomOf="@+id/image_view" android:layout_marginEnd="24dp"
-            android:layout_marginTop="6dp"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="24dp"
+            app:layout_constraintTop_toBottomOf="@+id/image_view"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="8dp" app:layout_constraintBottom_toTopOf="@+id/summary_view"
+    />
+
     <TextView
+            android:text=""
             android:id="@+id/summary_view"
             android:layout_width="match_parent"
-            android:layout_height="380dp"
+            android:layout_height="wrap_content"
             android:textAppearance="?android:textAppearanceMedium"
-            android:padding="16dp" tools:ignore="MissingConstraints"
-            android:background="@drawable/border_radius"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="24dp" android:layout_marginEnd="24dp"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
             app:layout_constraintTop_toBottomOf="@+id/title_view"
-            android:layout_marginTop="4dp" app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="4dp"/>
+            android:layout_marginTop="8dp"
+            android:textSize="18sp"
+            android:textColor="#434343"/>
+
+    <TextView
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/page_view"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="38dp"
+            android:textSize="16sp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="178dp"
+            android:layout_marginEnd="161dp"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
