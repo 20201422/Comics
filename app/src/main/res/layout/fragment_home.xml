@@ -10,11 +10,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="主页"/>
+
     <Button
-            android:text="Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/button"/>
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button" />
 
 
 </FrameLayout>
