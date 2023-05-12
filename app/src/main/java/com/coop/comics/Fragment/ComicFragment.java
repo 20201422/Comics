@@ -51,9 +51,9 @@ public class ComicFragment extends Fragment {
             ViewGroup.LayoutParams layoutParamsForImage = imageView.getLayoutParams();  // 获取当前 ImageView 的布局参数
             layoutParamsForImage.height = 1240;    // 设置高度值
             imageView.setLayoutParams(layoutParamsForImage);    // 应用新的布局参数
-            
+
             titleView.setTextSize(42);  // 放大标题字体
-            
+
             ViewGroup.MarginLayoutParams layoutParamsForSummary = (ViewGroup.MarginLayoutParams)
                     summaryView.getLayoutParams(); // 获取当前 TextView 的布局参数
             layoutParamsForSummary.topMargin = -90;   // 设置上边距值
