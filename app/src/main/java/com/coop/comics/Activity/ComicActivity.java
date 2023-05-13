@@ -4,20 +4,14 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
-import android.database.sqlite.SQLiteDatabase;
-import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 import com.coop.comics.Adapter.ComicAdapter;
 import com.coop.comics.Dao.PagesDao;
-import com.coop.comics.Model.Bookmark;
 import com.coop.comics.Model.ComicData;
 import com.coop.comics.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ComicActivity extends AppCompatActivity {
@@ -112,7 +106,7 @@ public class ComicActivity extends AppCompatActivity {
     private List<ComicData> getComicData() {
         PagesDao pagesDao = new PagesDao(this);
 
-        List<ComicData> comicData = new ArrayList<>();
+        List<ComicData> comicData;
 
         comicData = pagesDao.queryByBookId(bookId);   //根据bookId查询所有页面内容
 //        comicData.add(new ComicData(R.mipmap.whwojx, "三体", "刘慈欣 著", -1));

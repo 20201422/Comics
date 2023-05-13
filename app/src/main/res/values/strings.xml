@@ -9,5 +9,7 @@
     <string name="book_1_page_1">第一页内容</string>
     <string name="book_1_page_2">第二页内容</string>
     <string name="book_1_page_3">第三页内容</string>
+    <string name="bookmark">书签</string>
+    <string name="reading">阅读中</string>
 
 </resources>

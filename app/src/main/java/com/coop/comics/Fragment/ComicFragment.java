@@ -22,8 +22,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import com.coop.comics.Activity.ComicActivity;
 import com.coop.comics.Activity.MainActivity;
-import com.coop.comics.Dao.BookmarkDao;
-import com.coop.comics.Dao.PagesDao;
 import com.coop.comics.Model.ComicData;
 import com.coop.comics.R;
 
@@ -197,7 +195,7 @@ public class ComicFragment extends Fragment {
         summaryView.setText(comicData.getSummary());   // 添加内容到组件
     }
     
-    public void collectionClick() { // 收藏按钮
+    private void collectionClick() { // 收藏按钮
         if (comicData.isCollection()) {   // 已经在收藏了
             // 数据库操作删除收藏
             
@@ -211,7 +209,7 @@ public class ComicFragment extends Fragment {
         }
     }
     
-    public void bookmarkClick() {   // 书签按钮
+    private void bookmarkClick() {   // 书签按钮// 书签按钮
         BookmarkDao bookmarkDao = new BookmarkDao(requireContext());
         PagesDao pagesDao = new PagesDao(requireContext());
         if (comicData.isBookmark()) {   // 已经有书签了
@@ -227,6 +225,18 @@ public class ComicFragment extends Fragment {
         }
     }
     
+    private void longCollectionClick() {    // 长按收藏按钮
+        Intent intent = new Intent(getActivity(), MainActivity.class);  // 创建跳转到目标 Activity 的 Intent
+        intent.putExtra("goWhere", "collection");   // 去收藏Fragment
+        startActivity(intent);  // 启动目标 Activity
+    }
+
+    private void longBookmarkClick() {  // 长按书签按钮
+        Intent intent = new Intent(getActivity(), MainActivity.class);  // 创建跳转到目标 Activity 的 Intent
+        intent.putExtra("goWhere", "bookmark"); // 去书签Fragment
+        startActivity(intent);  // 启动目标 Activity
+    }
+
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {   // 自动轮播
         super.setUserVisibleHint(isVisibleToUser);
