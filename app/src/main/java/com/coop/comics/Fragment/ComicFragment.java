@@ -140,14 +140,11 @@ public class ComicFragment extends Fragment {
         bookmarkButton.setOnClickListener(v -> bookmarkClick());    // 点击书签按钮
         
         collectionButton.setOnLongClickListener(v -> {  // 长按收藏按钮跳转到收藏Fragment
-           
+           longCollectionClick();
             return true; // 事件已处理
         });
         bookmarkButton.setOnLongClickListener(v -> {    // 长安书签按钮跳转到书签Fragment
-            
-            Intent intent = new Intent(getActivity(), MainActivity.class);  // 创建跳转到目标 Activity 的 Intent
-            startActivity(intent);  // 启动目标 Activity
-            
+            longBookmarkClick();
             return true; // 事件已处理
         });
 
@@ -174,8 +171,8 @@ public class ComicFragment extends Fragment {
             pageView.setVisibility(View.VISIBLE);   // 页数可见
             pageView.setText("第 " + comicData.getPage() + " 页/共 "+ sumPages + " 页");
             
-            collectionButton.setVisibility(View.VISIBLE);
-            bookmarkButton.setVisibility(View.VISIBLE);
+            collectionButton.setVisibility(View.VISIBLE);   // 收藏按钮可见
+            bookmarkButton.setVisibility(View.VISIBLE); // 书签按钮可见
         }
         
         if (comicData.getSummary() != null && !comicData.getSummary().equals("")
@@ -195,7 +192,7 @@ public class ComicFragment extends Fragment {
         summaryView.setText(comicData.getSummary());   // 添加内容到组件
     }
     
-    public void collectionClick() { // 收藏按钮
+    private void collectionClick() { // 收藏按钮
         if (comicData.isCollection()) {   // 已经在收藏了
             // 数据库操作删除收藏
             
@@ -209,7 +206,7 @@ public class ComicFragment extends Fragment {
         }
     }
     
-    public void bookmarkClick() {   // 书签按钮
+    private void bookmarkClick() {   // 书签按钮
         if (comicData.isBookmark()) {   // 已经有书签了
             // 数据库操作删除书签
             
@@ -221,6 +218,18 @@ public class ComicFragment extends Fragment {
             comicData.setBookmark(true);
             bookmarkButton.setBackgroundResource(R.drawable.bookmark_round_button_background);  // 修改按钮样式
         }
+    }
+    
+    private void longCollectionClick() {    // 长按收藏按钮
+        Intent intent = new Intent(getActivity(), MainActivity.class);  // 创建跳转到目标 Activity 的 Intent
+        intent.putExtra("goWhere", "collection");   // 去收藏Fragment
+        startActivity(intent);  // 启动目标 Activity
+    }
+    
+    private void longBookmarkClick() {  // 长按书签按钮
+        Intent intent = new Intent(getActivity(), MainActivity.class);  // 创建跳转到目标 Activity 的 Intent
+        intent.putExtra("goWhere", "bookmark"); // 去书签Fragment
+        startActivity(intent);  // 启动目标 Activity
     }
     
     @Override
