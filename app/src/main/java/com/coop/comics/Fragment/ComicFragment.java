@@ -9,7 +9,9 @@
 package com.coop.comics.Fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +19,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Button;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import com.coop.comics.Activity.ComicActivity;
+import com.coop.comics.Activity.MainActivity;
 import com.coop.comics.Model.ComicData;
 import com.coop.comics.R;
 
@@ -132,14 +136,26 @@ public class ComicFragment extends Fragment {
 
         modifyStyle();  // 修改样式以及嵌入数据
         
-        collectionButton.setOnClickListener(v-> collectionClick()); // 收藏功能
-        bookmarkButton.setOnClickListener(v -> bookmarkClick());    // 书签功能
+        collectionButton.setOnClickListener(v-> collectionClick()); // 点击收藏按钮
+        bookmarkButton.setOnClickListener(v -> bookmarkClick());    // 点击书签按钮
+        
+        collectionButton.setOnLongClickListener(v -> {  // 长按收藏按钮跳转到收藏Fragment
+           
+            return true; // 事件已处理
+        });
+        bookmarkButton.setOnLongClickListener(v -> {    // 长安书签按钮跳转到书签Fragment
+            
+            Intent intent = new Intent(getActivity(), MainActivity.class);  // 创建跳转到目标 Activity 的 Intent
+            startActivity(intent);  // 启动目标 Activity
+            
+            return true; // 事件已处理
+        });
 
         return view;
     }
     
     @SuppressLint("SetTextI18n")
-    public void modifyStyle() {
+    public void modifyStyle() { // 界面处理
         if (comicData.getPage() == -1) {   // 是封面页
             ViewGroup.LayoutParams layoutParamsForImage = imageView.getLayoutParams();  // 获取当前 ImageView 的布局参数
             layoutParamsForImage.height = 1240;    // 设置高度值
