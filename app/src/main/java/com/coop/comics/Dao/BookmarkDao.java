@@ -1,11 +1,14 @@
 package com.coop.comics.Dao;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.coop.comics.Model.Book;
 import com.coop.comics.Model.Bookmark;
 import com.coop.comics.Model.ComicData;
 
@@ -31,9 +34,22 @@ public class BookmarkDao extends SQLiteOpenHelper {
      * @return
      */
     public ArrayList<Bookmark> queryAllBookmark(){
+        SQLiteDatabase db = getWritableDatabase();
         ArrayList<Bookmark> list = new ArrayList<Bookmark>();
 
+        Cursor results = db.query("bookmark",null,null,null,null,null,null);
+        int resultCounts = results.getCount();
 
+        if(resultCounts==0||!results.moveToFirst()){
+            return list;
+        }
+
+        for(int i=0;i<resultCounts;i++){
+            @SuppressLint("Range")
+            Bookmark bookmark = new Bookmark(results.getInt(0),results.getInt(1),results.getString(2),results.getInt(3));
+            list.add(bookmark);
+            results.moveToNext();
+        }
 
         return list;
     }
@@ -52,7 +68,7 @@ public class BookmarkDao extends SQLiteOpenHelper {
     /**
      * 删除某个书签
      */
-    public void delMark(){
+    public void delMark(int markId){
 
     }
 

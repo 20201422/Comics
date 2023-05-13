@@ -22,6 +22,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import com.coop.comics.Activity.ComicActivity;
 import com.coop.comics.Activity.MainActivity;
+import com.coop.comics.Dao.BookmarkDao;
+import com.coop.comics.Dao.PagesDao;
 import com.coop.comics.Model.ComicData;
 import com.coop.comics.R;
 
@@ -210,14 +212,16 @@ public class ComicFragment extends Fragment {
     }
     
     public void bookmarkClick() {   // 书签按钮
+        BookmarkDao bookmarkDao = new BookmarkDao(requireContext());
+        PagesDao pagesDao = new PagesDao(requireContext());
         if (comicData.isBookmark()) {   // 已经有书签了
             // 数据库操作删除书签
-            
+            bookmarkDao.delMark(comicData.getImageResId());
             comicData.setBookmark(false);
             bookmarkButton.setBackgroundResource(R.drawable.not_bookmark_round_button_background);  // 修改按钮样式
         } else {    // 还没有书签
             // 数据库操作添加书签
-            
+            pagesDao.addToBookmark(comicData);
             comicData.setBookmark(true);
             bookmarkButton.setBackgroundResource(R.drawable.bookmark_round_button_background);  // 修改按钮样式
         }

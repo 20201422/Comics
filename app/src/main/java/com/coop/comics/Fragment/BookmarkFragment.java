@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.coop.comics.Adapter.BookmarkAdapter;
+import com.coop.comics.Dao.BookmarkDao;
 import com.coop.comics.Model.Bookmark;
 import com.coop.comics.R;
 
@@ -102,7 +103,9 @@ public class BookmarkFragment extends Fragment {
     
     public void getBookmark() {
         // 数据库读取书签
-        bookmarks.add(new Bookmark(1, 1, "三体",2));
-        bookmarks.add(new Bookmark(2, 1, "三体", 3));
+//        bookmarks.add(new Bookmark(1, 1, "三体",2));
+//        bookmarks.add(new Bookmark(2, 1, "三体", 3));
+        BookmarkDao bookmarkDao = new BookmarkDao(requireContext());
+        bookmarks = bookmarkDao.queryAllBookmark();
     }
 }

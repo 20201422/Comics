@@ -1,6 +1,7 @@
 package com.coop.comics.Dao;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -66,10 +67,25 @@ public class PagesDao extends SQLiteOpenHelper {
 
     /**
      * 根据pageId将该页添加进书签
-     * @param id
+     * @param comicData
      */
-    public void addToBookmark(int id){
+    public void addToBookmark(ComicData comicData){
         SQLiteDatabase db = getWritableDatabase();
+
+        String sql = "select * from book where book_id = "+comicData.getBookId();
+        Cursor cursor = db.rawQuery(sql,null);  //获取对应的书
+        int resultCounts = cursor.getCount();
+
+        if(resultCounts==0||!cursor.moveToFirst()){
+            return ;
+        }
+        ContentValues newValues = new ContentValues();   //存放书签内容
+
+        newValues.put("book_id",comicData.getBookId());
+        newValues.put("book_name",cursor.getString(1));
+        newValues.put("page_id",comicData.getPage());
+
+        db.insert("bookmark",null,newValues);
     }
 
 }

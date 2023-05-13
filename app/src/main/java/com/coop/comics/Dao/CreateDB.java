@@ -21,12 +21,13 @@ public class CreateDB extends SQLiteOpenHelper {
             ",summary text" +
             ",page int)";
     private static final String dbCreateCollection = "create table collection(" +
-            "id integer primary key autoincrement" +
+            "collectionId integer primary key autoincrement" +
             ",book_id integer" +
             ",page_id integer)";
     private static final String dbCreateBookmark = "create table bookmark(" +
-            "id integer primary key autoincrement" +
+            "bookmarkId integer primary key autoincrement" +
             ",book_id integer" +
+            ",book_name text" +
             ",page_id integer)";
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
