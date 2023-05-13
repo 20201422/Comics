@@ -87,9 +87,11 @@ public class BookmarkFragment extends Fragment {
         ListView listView = view.findViewById(R.id.bookmark_list);
         
         getBookmark(); // 数据库读取书签
-        
-        listView.setAdapter(new BookmarkAdapter(bookmarks, getContext()));
-        
+
+        if (bookmarks.size() != 0) {    // 如果有书签
+            listView.setBackgroundResource(R.drawable.border_radius);   // 添加背景
+        }
+
         listView.setOnItemClickListener((parent, view1, position, id) -> {
             Intent intent = new Intent("com.coop.comics.Activity.ComicActivity");
             intent.putExtra("stopPage", bookmarks.get(position).getPage()); // 传输书签的页数
@@ -98,6 +100,8 @@ public class BookmarkFragment extends Fragment {
             startActivity(intent);  // 启动 ComicActivity
         }); // 点击书签
         
+        listView.setAdapter(new BookmarkAdapter(bookmarks, getContext()));
+
         return view;
     }
     
