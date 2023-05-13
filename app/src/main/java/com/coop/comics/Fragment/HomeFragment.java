@@ -94,14 +94,8 @@ public class HomeFragment extends Fragment {
         if (books != null) {    // 解决数据重复的问题
             books.clear();
         }
-
-        books = new BookDao().queryBooks(db);
-
-
-//        books.add(new Book(1, "三体", R.mipmap.whwojx));
-//        books.add(new Book(2, "哈利波特", R.mipmap.whwojx));
-//        books.add(new Book(3, "沙丘", R.mipmap.whwojx));
-//        books.add(new Book(4, "安德的游戏", R.mipmap.whwojx));
+        
+        getBookList();  // 数据库获取书
 
         GridView gridView = view.findViewById(R.id.home_books);
         gridView.setAdapter(new BookAdapter(books, requireContext()));
@@ -109,9 +103,20 @@ public class HomeFragment extends Fragment {
         gridView.setOnItemClickListener((adapterView, view1, i, l) -> {
             Intent intent = new Intent("com.coop.comics.Activity.ComicActivity");
             intent.putExtra("bookId", books.get(i).getId());  // 传输bookId
+
             startActivity(intent);  // 启动 ComicActivity
-        });
+        }); // 点击事件
 
         return view;
     }
+    
+    public void getBookList() {
+        // 数据库查询所有的书
+        books = new BookDao().queryBooks(db);
+//        books.add(new Book(1, "三体", R.mipmap.whwojx));
+//        books.add(new Book(2, "哈利波特", R.mipmap.whwojx));
+//        books.add(new Book(3, "沙丘", R.mipmap.whwojx));
+//        books.add(new Book(4, "安德的游戏", R.mipmap.whwojx));
+    }
+    
 }

@@ -17,8 +17,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="42dp"
                 android:textSize="40sp"
                 android:textColor="#373737"
                 android:textStyle="bold"/>
@@ -33,14 +33,22 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:layout_marginTop="24dp"
-                android:layout_marginBottom="24dp" android:paddingLeft="12dp" android:paddingTop="12dp"
-                android:paddingRight="12dp" android:paddingBottom="12dp">
+                android:layout_marginBottom="24dp"
+                android:paddingLeft="12dp"
+                android:paddingTop="12dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="12dp">
         </GridView>
         <ImageView
                 android:src="@mipmap/nchu"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/imageView" android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp" android:layout_marginBottom="24dp" android:layout_marginTop="24dp"/>
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="24dp"
+                android:layout_marginTop="24dp"
+                android:contentDescription="TODO"/>
     </LinearLayout>
 
 </FrameLayout>
