@@ -69,8 +69,12 @@ public class BookDao extends SQLiteOpenHelper {
     }
 
     public void initBook_one(){
-        pages.add(new ComicData(R.mipmap.a01_cover,1,"封面页","封面",-1));
-        pages.add(new ComicData(R.mipmap.a01_breif,1,"简介页","简介内容",0));
+        pages.add(new ComicData(R.mipmap.a01_cover,1,"战火中的青春","陆柱国   原著\n卢陵   改编\n曲羊   绘画",-1));
+        pages.add(new ComicData(R.mipmap.a01_breif,1,"简介页",
+                "故事发生于苏北。1946年冬天,我解放重某部,解救了被敌人圉困在山头上的区小队长高山,并把他分配到作战勇猛、驩名远近的尖刀英雄排为副排长。\n" +
+                        "这位矮小瘦弱、穿着破烂的副排长最初并不受人欢迎,排长雷振林认为这是舱英雄排丢人,挑皮的战士也认为他尺4不够。但是高山严懂地执行了自己的职责,在工作和战斗中显示了他的机智与才能,逐渐赢得全排的信任。一次奇袭敌人营部时,排长雷振林由于个人英雄主义,不听劝貌,光图一时勇气追击敌人,只身困入重圉被高山救出。就在这次战斗中高山负重伤入院了。\n" +
+                        "·当雷振林到医院去探望高山时,才知道这位机智、善战的副排长是位女同志……。此后他價虽然分手了，但是共同战斗的日子,使他胚结成了难忘的友谊。\n"
+                ,0));
         pages.add(new ComicData(R.mipmap.a0101,1,"第一幕",
                 "1946年冬天，国民党反动派向老根据地进攻，某县区小队被敌人包图在山头上。群多同志都相朱牺性了,就剩下一个名叫高山的区小队长，对付着山下的敌人。"
                 ,1));
@@ -83,6 +87,24 @@ public class BookDao extends SQLiteOpenHelper {
         pages.add(new ComicData(R.mipmap.a0104,1,"第四幕",
                 "高山猛然跳起把机枪砸碎,拾起一支步枪继续向敌人射击。"
                 ,4));
+        pages.add(new ComicData(R.mipmap.a0105,1,"第五幕",
+                "步枪的弹槽也室了,他拿起最后一棵手榴弹,迎着敌人的喊柔声走去,准备与敌人同归于尽。"
+                ,5));
+        pages.add(new ComicData(R.mipmap.a0106,1,"第六幕",
+                "突然一声巨响，炮僤在敌人背后开了花,敌人退下去了，远处我解放军野战部队赶到了，雄体的审号声响彻山野。"
+                ,6));
+        pages.add(new ComicData(R.mipmap.a0107,1,"第七幕",
+                "解放军野战部队的一个身材高大的团长快马加鞭赶过步兵战士。"
+                ,7));
+        pages.add(new ComicData(R.mipmap.a0108,1,"第八幕",
+                "狭窄的山谷里飞奔出尖刀英雄排排长雷振林,他后面是高个子的一班长“仙鹤”和小胖等战士们。"
+                ,8));
+        pages.add(new ComicData(R.mipmap.a0109,1,"第九幕",
+                "由于英雄排长等人的出现、高山得救了，他长吁一口气,软瘫地倚在巨石上,步枪从他的手中掉落。"
+                ,9));
+        pages.add(new ComicData(R.mipmap.a0110,1,"第十幕",
+                "这时团长看到不注意隐蔽又椅个指押刀的雷振林，勒合他把刀交上来,雷振林却再三睛求准许他使用这把刚徼来的指押刀。"
+                ,10));
     }
     public void initBook_two(){
         pages.add(new ComicData(R.mipmap.a02_cover,2,"封面页",
