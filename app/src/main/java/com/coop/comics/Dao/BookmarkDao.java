@@ -53,18 +53,4 @@ public class BookmarkDao extends SQLiteOpenHelper {
 
         return list;
     }
-
-    /**
-     * 根据书签id查询某一页内容
-     * @param id
-     * @return
-     */
-    public ComicData findPageByMarkId(int id){
-
-
-        return null;
-    }
-
-
-
 }

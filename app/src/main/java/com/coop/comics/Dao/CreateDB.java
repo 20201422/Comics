@@ -22,8 +22,9 @@ public class CreateDB extends SQLiteOpenHelper {
             ",isCollection integer" +
             ",isBookmark integer)";
     private static final String dbCreateCollection = "create table collection(" +
-            "collectionId integer primary key autoincrement" +
+            "collectionId integer " +
             ",book_id integer" +
+            ",book_name text" +
             ",page_id integer)";
     private static final String dbCreateBookmark = "create table bookmark(" +
             "bookmarkId integer" +

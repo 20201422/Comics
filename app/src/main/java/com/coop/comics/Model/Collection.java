@@ -12,14 +12,16 @@ public class Collection {
     
     private int collectionId;
     private int bookId;
+    private String bookName;
     private int page;
     
     public Collection() {
     }
     
-    public Collection(int collectionId, int bookId, int page) {
+    public Collection(int collectionId, int bookId,String bookName, int page) {
         this.collectionId = collectionId;
         this.bookId = bookId;
+        this.bookName = bookName;
         this.page = page;
     }
     
@@ -38,7 +40,15 @@ public class Collection {
     public void setBookId(int bookId) {
         this.bookId = bookId;
     }
-    
+
+    public String getBookName() {
+        return bookName;
+    }
+
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
+    }
+
     public int getPage() {
         return page;
     }

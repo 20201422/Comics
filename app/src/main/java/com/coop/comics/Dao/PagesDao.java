@@ -38,7 +38,6 @@ public class PagesDao extends SQLiteOpenHelper {
         String sql = "select * from pages where bookId="+id;
         Cursor cursor = db.rawQuery(sql,null);
         int resultCounts = cursor.getCount();
-        System.out.println("length:"+resultCounts);
         if(resultCounts==0||!cursor.moveToFirst()){
             return pages;
         }
@@ -61,10 +60,34 @@ public class PagesDao extends SQLiteOpenHelper {
 
     /**
      * 根据pageId将该页添加进收藏
-     * @param id
+     * @param comicData
      */
-    public void addToCollection(int id){
+    public void addToCollection(ComicData comicData){
         SQLiteDatabase db = getWritableDatabase();
+        String sql = "select * from book where book_id = "+comicData.getBookId();
+        Cursor cursor = db.rawQuery(sql,null);  //获取对应的书
+        int resultCounts = cursor.getCount();
+        if(resultCounts==0||!cursor.moveToFirst()){
+            return ;
+        }
+        ContentValues newValues = new ContentValues();   //存放收藏内容
+        newValues.put("collectionId",comicData.getImageResId());
+        newValues.put("book_id",comicData.getBookId());
+        newValues.put("book_name",cursor.getString(1));
+        newValues.put("page_id",comicData.getPage());
+        db.insert("bookmark",null,newValues);  //插入数据
+        updatePageCollect(comicData);  //更新状态
+    }
+
+    /**
+     * 删除某个收藏
+     * @param comicData
+     */
+    public void delCollection(ComicData comicData){
+        SQLiteDatabase db = getWritableDatabase();
+        String sql = "delete from collection where collectionId = "+comicData.getImageResId();
+        db.execSQL(sql);
+        updatePageNotCollect(comicData);
     }
 
     /**
@@ -114,6 +137,24 @@ public class PagesDao extends SQLiteOpenHelper {
     public void updatePageNotMark(ComicData comicData){
         SQLiteDatabase db = getWritableDatabase();
         String sql = "update pages set isBookmark = 0 where imageResId = "+comicData.getImageResId();
+        db.execSQL(sql);
+    }
+    /**
+     * 将页面改为是收藏的状态
+     * @param comicData
+     */
+    public void updatePageCollect(ComicData comicData){
+        SQLiteDatabase db = getWritableDatabase();
+        String sql = "update pages set isCollection = 1 where imageResId = "+comicData.getImageResId();
+        db.execSQL(sql);
+    }
+    /**
+     * 将页面改为不是收藏的状态
+     * @param comicData
+     */
+    public void updatePageNotCollect(ComicData comicData){
+        SQLiteDatabase db = getWritableDatabase();
+        String sql = "update pages set isCollection = 0 where imageResId = "+comicData.getImageResId();
         db.execSQL(sql);
     }
 

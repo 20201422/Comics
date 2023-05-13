@@ -1,8 +1,12 @@
 package com.coop.comics.Dao;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.coop.comics.Model.Bookmark;
 import com.coop.comics.Model.Collection;
 import java.util.ArrayList;
 
@@ -26,8 +30,22 @@ public class CollectionDao extends SQLiteOpenHelper {
      * @return
      */
     public ArrayList<Collection> queryAllCollection(){
+        SQLiteDatabase db = getWritableDatabase();
         ArrayList<Collection> list = new ArrayList<Collection>();
 
+        Cursor results = db.query("collection",null,null,null,null,null,null);
+        int resultCounts = results.getCount();
+
+        if(resultCounts==0||!results.moveToFirst()){
+            return list;
+        }
+
+        for(int i=0;i<resultCounts;i++){
+            @SuppressLint("Range")
+            Collection collection = new Collection(results.getInt(0),results.getInt(1),results.getString(2),results.getInt(3));
+            list.add(collection);
+            results.moveToNext();
+        }
 
         return list;
     }
