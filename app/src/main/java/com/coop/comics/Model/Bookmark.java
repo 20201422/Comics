@@ -8,17 +8,19 @@
 
 package com.coop.comics.Model;
 
-public class Bookmark {
-    private int bookmarkId;
-    private int bookId;
-    private int page;
+import java.io.Serializable;
+
+public class Bookmark implements Serializable {
+    private int bookmarkId; // 书签id
+    private String bookName;    // 书名称
+    private int page;   // 页书
     
     public Bookmark() {
     }
     
-    public Bookmark(int bookmarkId, int bookId, int page) {
+    public Bookmark(int bookmarkId, String bookName, int page) {
         this.bookmarkId = bookmarkId;
-        this.bookId = bookId;
+        this.bookName = bookName;
         this.page = page;
     }
     
@@ -30,12 +32,12 @@ public class Bookmark {
         this.bookmarkId = bookmarkId;
     }
     
-    public int getBookId() {
-        return bookId;
+    public String getBookName() {
+        return bookName;
     }
     
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
     }
     
     public int getPage() {

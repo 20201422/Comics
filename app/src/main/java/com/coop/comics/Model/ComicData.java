@@ -8,13 +8,17 @@
 
 package com.coop.comics.Model;
 
-public class ComicData {
+import java.io.Serializable;
+
+public class ComicData implements Serializable {
     
     private int imageResId;
     private int bookId;
     private String title;
     private String summary;
     private int page;
+    private boolean isCollection;
+    private boolean isBookmark;
     
     public ComicData() {
     }
@@ -29,6 +33,16 @@ public class ComicData {
 
     public int getImageResId() {
         return imageResId;
+    }
+    
+    public ComicData(int imageResId, String title, String summary, int page,
+                     boolean isCollection, boolean isBookmark) {
+        this.imageResId = imageResId;
+        this.title = title;
+        this.summary = summary;
+        this.page = page;
+        this.isCollection = isCollection;
+        this.isBookmark = isBookmark;
     }
     
     public void setImageResId(int imageResId) {
@@ -65,6 +79,22 @@ public class ComicData {
     
     public void setPage(int page) {
         this.page = page;
+    }
+    
+    public boolean isCollection() {
+        return isCollection;
+    }
+    
+    public void setCollection(boolean collection) {
+        isCollection = collection;
+    }
+    
+    public boolean isBookmark() {
+        return isBookmark;
+    }
+    
+    public void setBookmark(boolean bookmark) {
+        isBookmark = bookmark;
     }
 }
 
