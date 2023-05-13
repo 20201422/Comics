@@ -69,6 +69,7 @@ public class BookDao extends SQLiteOpenHelper {
     }
 
     public void initBook_one(){
+
         pages.add(new ComicData(R.mipmap.a01_cover,1,"战火中的青春","陆柱国   原著\n卢    陵   改编\n曲    羊   绘画",-1));
         pages.add(new ComicData(R.mipmap.a01_breif,1,"简介页",
                 "故事发生于苏北。1946年冬天,我解放重某部,解救了被敌人圉困在山头上的区小队长高山,并把他分配到作战勇猛、驩名远近的尖刀英雄排为副排长。\n" +
