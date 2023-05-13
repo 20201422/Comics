@@ -6,9 +6,10 @@
 
     <string name="book_1_page_cover">战火中的青春</string>
     <string name="book_1_page_brief">简介</string>
-    <string name="book_1_page_1">第一页内容</string>
-    <string name="book_1_page_2">第二页内容</string>
-    <string name="book_1_page_3">第三页内容</string>
+    <string name="book_1_page_1">1946年冬天，国民党反动派向老根据地进攻，某县区小队被敌人包图在山头上。群多同志都相朱牺性了,就剩下一个名叫高山的区小队长，对付着山下的敌人。</string>
+    <string name="book_1_page_2">大批敌人嗥叫着冲上来，高山愤怒地跳到岩石上，操起机榆向敌人射击。</string>
+    <string name="book_1_page_3">机枪没子弹了,背后山脚下又喊起了杀声,敌人包围上来了。</string>
+    <string name="book_1_page_4">高山猛然跳起把机枪砸碎,拾起一支步枪继续向敌人射击。</string>
     <string name="bookmark">书签</string>
     <string name="reading">阅读中</string>
 
