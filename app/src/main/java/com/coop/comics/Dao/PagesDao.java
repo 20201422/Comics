@@ -25,6 +25,12 @@ public class PagesDao extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
     }
+
+    /**
+     * 根据bookId查询每一页内容
+     * @param id
+     * @return
+     */
     public ArrayList<ComicData> queryByBookId(int id){
         SQLiteDatabase db = getWritableDatabase();
         ArrayList<ComicData> pages = new ArrayList<ComicData>();
@@ -49,4 +55,21 @@ public class PagesDao extends SQLiteOpenHelper {
         }
         return pages;
     }
+
+    /**
+     * 根据pageId将该页添加进收藏
+     * @param id
+     */
+    public void addToCollection(int id){
+        SQLiteDatabase db = getWritableDatabase();
+    }
+
+    /**
+     * 根据pageId将该页添加进书签
+     * @param id
+     */
+    public void addToBookmark(int id){
+        SQLiteDatabase db = getWritableDatabase();
+    }
+
 }
