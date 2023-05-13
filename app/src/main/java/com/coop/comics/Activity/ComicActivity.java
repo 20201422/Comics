@@ -114,7 +114,7 @@ public class ComicActivity extends AppCompatActivity {
 
         List<ComicData> comicData = new ArrayList<>();
 
-        comicData = pagesDao.queryByBookId(bookId);
+        comicData = pagesDao.queryByBookId(bookId);   //根据bookId查询所有页面内容
 //        comicData.add(new ComicData(R.mipmap.whwojx, "三体", "刘慈欣 著", -1));
 //        comicData.add(new ComicData(R.mipmap.whwojx, "简介",
 //                "宇宙就是一座黑暗森林，每个文明都是带枪的猎人，像幽灵般潜行于林间，轻轻拨开挡路的树枝，竭力不让脚步发出一点儿声音，" +
