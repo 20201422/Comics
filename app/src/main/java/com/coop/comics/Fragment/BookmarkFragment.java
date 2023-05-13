@@ -92,6 +92,7 @@ public class BookmarkFragment extends Fragment {
         listView.setOnItemClickListener((parent, view1, position, id) -> {
             Intent intent = new Intent("com.coop.comics.Activity.ComicActivity");
             intent.putExtra("stopPage", bookmarks.get(position).getPage()); // 传输书签的页数
+            intent.putExtra("bookId", bookmarks.get(position).getBookId()); // 传输书的id
             
             startActivity(intent);  // 启动 ComicActivity
         }); // 点击书签
@@ -101,7 +102,7 @@ public class BookmarkFragment extends Fragment {
     
     public void getBookmark() {
         // 数据库读取书签
-        bookmarks.add(new Bookmark(1,"三体",2));
-        bookmarks.add(new Bookmark(2, "三体", 3));
+        bookmarks.add(new Bookmark(1, 1, "三体",2));
+        bookmarks.add(new Bookmark(2, 1, "三体", 3));
     }
 }
