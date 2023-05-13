@@ -87,7 +87,9 @@ public class BookmarkFragment extends Fragment {
         
         getBookmark(); // 数据库读取书签
         
-        listView.setAdapter(new BookmarkAdapter(bookmarks, getContext()));
+        if (bookmarks.size() != 0) {    // 如果有书签
+            listView.setBackgroundResource(R.drawable.border_radius);   // 添加背景
+        }
         
         listView.setOnItemClickListener((parent, view1, position, id) -> {
             Intent intent = new Intent("com.coop.comics.Activity.ComicActivity");
@@ -97,12 +99,14 @@ public class BookmarkFragment extends Fragment {
             startActivity(intent);  // 启动 ComicActivity
         }); // 点击书签
         
+        listView.setAdapter(new BookmarkAdapter(bookmarks, getContext()));
+        
         return view;
     }
     
     public void getBookmark() {
         // 数据库读取书签
-        bookmarks.add(new Bookmark(1, 1, "三体",2));
-        bookmarks.add(new Bookmark(2, 1, "三体", 3));
+//        bookmarks.add(new Bookmark(1, 1, "三体",2));
+//        bookmarks.add(new Bookmark(2, 1, "三体", 3));
     }
 }
