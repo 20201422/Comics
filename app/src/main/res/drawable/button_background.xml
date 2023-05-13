@@ -6,7 +6,7 @@
             <corners android:radius="8dp" />
 
             <!-- 阴影效果 -->
-            <solid android:color="@android:color/white" />
+            <solid android:color="#ECECEC" />
             <padding
                     android:left="8dp"
                     android:top="8dp"
@@ -24,7 +24,7 @@
             <corners android:radius="8dp" />
 
             <!-- 阴影效果 -->
-            <solid android:color="@android:color/white" />
+            <solid android:color="#ECECEC" />
             <padding
                     android:left="8dp"
                     android:top="8dp"

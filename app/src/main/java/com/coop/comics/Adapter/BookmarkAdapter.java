@@ -99,7 +99,7 @@ public class BookmarkAdapter extends BaseAdapter {
         }
         
         // 设置对应属性
-        viewHolder.bookmark1.setText(String.valueOf(i+1));
+        viewHolder.bookmark1.setText(String.valueOf(i + 1));
         viewHolder.bookmark2.setText(bookmarks.get(i).getBookName());
         viewHolder.bookmark3.setText("第 " + bookmarks.get(i).getPage() + " 页");
         
