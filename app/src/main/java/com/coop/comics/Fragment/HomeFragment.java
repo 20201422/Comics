@@ -38,16 +38,10 @@ public class HomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private SQLiteDatabase db;
-
     private List<Book> books = new ArrayList<>();
 
     public HomeFragment() {
         // Required empty public constructor
-    }
-
-    public HomeFragment(SQLiteDatabase db) {
-        this.db = db;
     }
 
     public List<Book> getBooks() {
@@ -112,11 +106,8 @@ public class HomeFragment extends Fragment {
     
     public void getBookList() {
         // 数据库查询所有的书
-        books = new BookDao().queryBooks(db);
-//        books.add(new Book(1, "三体", R.mipmap.whwojx));
-//        books.add(new Book(2, "哈利波特", R.mipmap.whwojx));
-//        books.add(new Book(3, "沙丘", R.mipmap.whwojx));
-//        books.add(new Book(4, "安德的游戏", R.mipmap.whwojx));
+        books = new BookDao(requireContext()).queryBooks();
+
     }
     
 }

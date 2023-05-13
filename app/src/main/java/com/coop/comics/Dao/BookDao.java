@@ -2,8 +2,12 @@ package com.coop.comics.Dao;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+import androidx.annotation.Nullable;
 
 import com.coop.comics.Model.Book;
 import com.coop.comics.Model.ComicData;
@@ -11,9 +15,14 @@ import com.coop.comics.R;
 
 import java.util.ArrayList;
 
-public class BookDao {
+public class BookDao extends SQLiteOpenHelper {
 
-    public SQLiteDatabase initBook(SQLiteDatabase db){
+    public BookDao(Context context) {
+        super(context, "comics.db", null, 1);
+    }
+
+    public void initBook(){
+        SQLiteDatabase db = getWritableDatabase();
         ArrayList<Book> bookList = new ArrayList<Book>();
         bookList.add(new Book(1,"战火中的青春",R.mipmap.a0101));
         bookList.add(new Book(2,"刘胡兰",R.mipmap.a0201));
@@ -39,12 +48,13 @@ public class BookDao {
             pageValues.put("title",pages.get(i).getTitle());
             pageValues.put("summary",pages.get(i).getSummary());
             pageValues.put("page",pages.get(i).getPage());
+            pageValues.put("isCollection",pages.get(i).isCollection());
+            pageValues.put("isBookmark",pages.get(i).isBookmark());
             db.insert("pages",null,pageValues);
         }
-        return db;
     }
-    public ArrayList<Book> queryBooks(SQLiteDatabase db){
-
+    public ArrayList<Book> queryBooks(){
+        SQLiteDatabase db = getWritableDatabase();
         ArrayList<Book> books = new ArrayList<Book>();
         //查询所有book
         Cursor results = db.query("book",null,null,null,null,null,null);
@@ -60,5 +70,15 @@ public class BookDao {
             results.moveToNext();
         }
         return books;
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+
     }
 }

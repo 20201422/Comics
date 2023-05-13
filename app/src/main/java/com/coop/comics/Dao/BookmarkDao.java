@@ -65,11 +65,6 @@ public class BookmarkDao extends SQLiteOpenHelper {
         return null;
     }
 
-    /**
-     * 删除某个书签
-     */
-    public void delMark(int markId){
 
-    }
 
 }

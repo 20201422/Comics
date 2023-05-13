@@ -42,11 +42,8 @@ public class ComicAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         ComicFragment fragment = new ComicFragment();
         Bundle bundle = new Bundle();
-        
         bundle.putSerializable("comicData", comicData.get(position));   // 获取数据类
-        
         bundle.putInt("sumPages", comicData.size() - 2);
-
         fragment.setArguments(bundle);
         
         return fragment;

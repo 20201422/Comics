@@ -17,8 +17,8 @@ public class ComicData implements Serializable {
     private String title;
     private String summary;
     private int page;
-    private boolean isCollection;
-    private boolean isBookmark;
+    private int isCollection;
+    private int isBookmark;
     
     public ComicData() {
     }
@@ -29,21 +29,14 @@ public class ComicData implements Serializable {
         this.title = title;
         this.summary = summary;
         this.page = page;
+        this.isBookmark=0;
+        this.isCollection=0;
     }
 
     public int getImageResId() {
         return imageResId;
     }
-    
-    public ComicData(int imageResId, String title, String summary, int page,
-                     boolean isCollection, boolean isBookmark) {
-        this.imageResId = imageResId;
-        this.title = title;
-        this.summary = summary;
-        this.page = page;
-        this.isCollection = isCollection;
-        this.isBookmark = isBookmark;
-    }
+
     
     public void setImageResId(int imageResId) {
         this.imageResId = imageResId;
@@ -81,19 +74,19 @@ public class ComicData implements Serializable {
         this.page = page;
     }
     
-    public boolean isCollection() {
+    public int isCollection() {
         return isCollection;
     }
     
-    public void setCollection(boolean collection) {
+    public void setCollection(int collection) {
         isCollection = collection;
     }
     
-    public boolean isBookmark() {
+    public int isBookmark() {
         return isBookmark;
     }
     
-    public void setBookmark(boolean bookmark) {
+    public void setBookmark(int bookmark) {
         isBookmark = bookmark;
     }
 }

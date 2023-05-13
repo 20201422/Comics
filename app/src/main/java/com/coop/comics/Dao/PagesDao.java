@@ -51,6 +51,8 @@ public class PagesDao extends SQLiteOpenHelper {
                     cursor.getString(2),
                     cursor.getString(3),
                     cursor.getInt(4));
+            comicData.setBookmark(cursor.getInt(5));
+            comicData.setBookmark(cursor.getInt(6));
             pages.add(comicData);
             cursor.moveToNext();
         }
@@ -71,21 +73,48 @@ public class PagesDao extends SQLiteOpenHelper {
      */
     public void addToBookmark(ComicData comicData){
         SQLiteDatabase db = getWritableDatabase();
-
         String sql = "select * from book where book_id = "+comicData.getBookId();
         Cursor cursor = db.rawQuery(sql,null);  //获取对应的书
         int resultCounts = cursor.getCount();
-
         if(resultCounts==0||!cursor.moveToFirst()){
             return ;
         }
         ContentValues newValues = new ContentValues();   //存放书签内容
-
+        newValues.put("bookmarkId",comicData.getImageResId());
         newValues.put("book_id",comicData.getBookId());
         newValues.put("book_name",cursor.getString(1));
         newValues.put("page_id",comicData.getPage());
+        db.insert("bookmark",null,newValues);  //插入数据
+        updatePageMark(comicData);  //更新状态
+    }
 
-        db.insert("bookmark",null,newValues);
+    /**
+     * 删除某个书签
+     */
+    public void delMark(ComicData comicData){
+        SQLiteDatabase db = getWritableDatabase();
+        String sql = "delete from bookmark where bookmarkId = "+comicData.getImageResId();
+        db.execSQL(sql);
+        updatePageNotMark(comicData);
+    }
+
+    /**
+     * 将页面改为是书签的状态
+     * @param comicData
+     */
+    public void updatePageMark(ComicData comicData){
+        SQLiteDatabase db = getWritableDatabase();
+        String sql = "update pages set isBookmark = 1 where imageResId = "+comicData.getImageResId();
+        db.execSQL(sql);
+    }
+    /**
+     * 将页面改为不是书签的状态
+     * @param comicData
+     */
+    public void updatePageNotMark(ComicData comicData){
+        SQLiteDatabase db = getWritableDatabase();
+        String sql = "update pages set isBookmark = 0 where imageResId = "+comicData.getImageResId();
+        db.execSQL(sql);
     }
 
 }

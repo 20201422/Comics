@@ -57,10 +57,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         db = new CreateDB(this).getDb();
-        BookDao bookDao = new BookDao();
+        BookDao bookDao = new BookDao(this);
         Cursor results = db.query("book",null,null,null,null,null,null);
         if(results.getCount()==0)
-            db = bookDao.initBook(db);   //初始化数据库
+            bookDao.initBook();   //初始化数据库
         
         goWhere = getIntent().getStringExtra("goWhere");  // 获取跳转的 Fragment
 
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                             return new BookmarkFragment();
                         case 0:
                         default:
-                            return new HomeFragment(db);
+                            return new HomeFragment();
                     }
                 }
             }

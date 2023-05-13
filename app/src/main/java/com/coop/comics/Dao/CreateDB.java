@@ -5,8 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class CreateDB extends SQLiteOpenHelper {
-    public SQLiteDatabase db;
-
+    SQLiteDatabase db;
     public CreateDB(Context context) {
         super(context, "comics.db", null, 1);
     }
@@ -19,13 +18,15 @@ public class CreateDB extends SQLiteOpenHelper {
             ",bookId integer" +
             ",title text" +
             ",summary text" +
-            ",page int)";
+            ",page integer" +
+            ",isCollection integer" +
+            ",isBookmark integer)";
     private static final String dbCreateCollection = "create table collection(" +
             "collectionId integer primary key autoincrement" +
             ",book_id integer" +
             ",page_id integer)";
     private static final String dbCreateBookmark = "create table bookmark(" +
-            "bookmarkId integer primary key autoincrement" +
+            "bookmarkId integer" +
             ",book_id integer" +
             ",book_name text" +
             ",page_id integer)";
@@ -35,16 +36,17 @@ public class CreateDB extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(dbCreatePages);
         sqLiteDatabase.execSQL(dbCreateCollection);
         sqLiteDatabase.execSQL(dbCreateBookmark);
+        System.out.println("yes");
 
-    }
-
-    public SQLiteDatabase getDb(){  //获取数据库
-        db = this.getWritableDatabase();
-        return db;
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
+    }
+
+    public SQLiteDatabase getDb() {
+        db = getWritableDatabase();
+        return db;
     }
 }

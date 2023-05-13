@@ -22,6 +22,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import com.coop.comics.Activity.ComicActivity;
 import com.coop.comics.Activity.MainActivity;
+import com.coop.comics.Dao.BookmarkDao;
+import com.coop.comics.Dao.PagesDao;
 import com.coop.comics.Model.ComicData;
 import com.coop.comics.R;
 
@@ -140,14 +142,11 @@ public class ComicFragment extends Fragment {
         bookmarkButton.setOnClickListener(v -> bookmarkClick());    // 点击书签按钮
         
         collectionButton.setOnLongClickListener(v -> {  // 长按收藏按钮跳转到收藏Fragment
-           
-            return true; // 事件已处理
+           longCollectionClick();
+           return true; // 事件已处理
         });
         bookmarkButton.setOnLongClickListener(v -> {    // 长安书签按钮跳转到书签Fragment
-            
-            Intent intent = new Intent(getActivity(), MainActivity.class);  // 创建跳转到目标 Activity 的 Intent
-            startActivity(intent);  // 启动目标 Activity
-            
+            longBookmarkClick();
             return true; // 事件已处理
         });
 
@@ -183,10 +182,10 @@ public class ComicFragment extends Fragment {
             summaryView.setBackgroundResource(R.drawable.border_radius);    // 设置背景
         }
         
-        if (comicData.isCollection()) { // 如果已经是收藏的了 修改按钮样式
+        if (comicData.isCollection()==1) { // 如果已经是收藏的了 修改按钮样式
             collectionButton.setBackgroundResource(R.drawable.collection_round_button_background);
         }
-        if (comicData.isBookmark()) {   // 如果已经有书签了 修改按钮样式
+        if (comicData.isBookmark()==1) {   // 如果已经有书签了 修改按钮样式
             bookmarkButton.setBackgroundResource(R.drawable.bookmark_round_button_background);
         }
         
@@ -196,31 +195,30 @@ public class ComicFragment extends Fragment {
     }
     
     private void collectionClick() { // 收藏按钮
-        if (comicData.isCollection()) {   // 已经在收藏了
+        if (comicData.isCollection()==1) {   // 已经在收藏了
             // 数据库操作删除收藏
             
-            comicData.setCollection(false);
+            comicData.setCollection(0);
             collectionButton.setBackgroundResource(R.drawable.not_collection_round_button_background);  // 修改按钮样式
         } else {    // 还没有收藏
             // 数据库操作添加收藏
             
-            comicData.setCollection(true);
+            comicData.setCollection(1);
             collectionButton.setBackgroundResource(R.drawable.collection_round_button_background);    // 修改按钮样式
         }
     }
     
-    private void bookmarkClick() {   // 书签按钮// 书签按钮
-        BookmarkDao bookmarkDao = new BookmarkDao(requireContext());
+    private void bookmarkClick() {   // 书签按钮
         PagesDao pagesDao = new PagesDao(requireContext());
-        if (comicData.isBookmark()) {   // 已经有书签了
+        if (comicData.isBookmark()==1) {   // 已经有书签了
             // 数据库操作删除书签
-            bookmarkDao.delMark(comicData.getImageResId());
-            comicData.setBookmark(false);
+            pagesDao.delMark(comicData);
+            comicData.setBookmark(0);
             bookmarkButton.setBackgroundResource(R.drawable.not_bookmark_round_button_background);  // 修改按钮样式
         } else {    // 还没有书签
             // 数据库操作添加书签
             pagesDao.addToBookmark(comicData);
-            comicData.setBookmark(true);
+            comicData.setBookmark(1);
             bookmarkButton.setBackgroundResource(R.drawable.bookmark_round_button_background);  // 修改按钮样式
         }
     }
