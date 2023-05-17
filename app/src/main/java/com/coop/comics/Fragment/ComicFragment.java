@@ -275,14 +275,15 @@ public class ComicFragment extends Fragment {
     }
     
     private void collectionClick() { // 收藏按钮
+        PagesDao pagesDao = new PagesDao(requireContext());
         if (comicData.isCollection() == 1) {   // 已经在收藏了
             // 数据库操作删除收藏
-            
+            pagesDao.delCollection(comicData);
             comicData.setCollection(0);
             collectionButton.setBackgroundResource(R.drawable.not_collection_round_button_background);  // 修改按钮样式
         } else {    // 还没有收藏
             // 数据库操作添加收藏
-            
+            pagesDao.addToCollection(comicData);
             comicData.setCollection(1);
             collectionButton.setBackgroundResource(R.drawable.collection_round_button_background);    // 修改按钮样式
         }

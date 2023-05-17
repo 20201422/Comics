@@ -162,7 +162,10 @@ public class PagesDao extends SQLiteOpenHelper {
     public List<ComicData> findAllCollection(){
         SQLiteDatabase db = getWritableDatabase();
         ArrayList<ComicData> pages = new ArrayList<ComicData>();
-        String sql = "select * from pages where isCollection=1";
+        String sql = "SELECT pages.* FROM \n" +
+                "pages,collection\n" +
+                "WHERE pages.imageResId = collection.collectionId\n" +
+                "ORDER BY collection.s_number";
         Cursor cursor = db.rawQuery(sql,null);
         int resultCounts = cursor.getCount();
         if(resultCounts==0||!cursor.moveToFirst()){

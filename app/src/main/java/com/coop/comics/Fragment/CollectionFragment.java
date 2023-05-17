@@ -89,7 +89,7 @@ public class CollectionFragment extends Fragment {
 
         listView.setOnItemClickListener((parent, view1, position, id) -> {
             Intent intent = new Intent("com.coop.comics.Activity.CollectionActivity");
-            intent.putExtra("stopPage", collections.get(position).getPage()); // 传输书签的页数
+            intent.putExtra("stopPage", collections.get(position).getS_number()); // 传输书签的页数
             intent.putExtra("bookId", collections.get(position).getBookId()); // 传输书的id
 
             startActivity(intent);  // 启动 ComicActivity

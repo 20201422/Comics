@@ -25,7 +25,8 @@ public class CreateDB extends SQLiteOpenHelper {
             "collectionId integer " +
             ",book_id integer" +
             ",book_name text" +
-            ",page_id integer)";
+            ",page_id integer" +
+            ",s_number integer primary key autoincrement)";
     private static final String dbCreateBookmark = "create table bookmark(" +
             "bookmarkId integer" +
             ",book_id integer" +
@@ -37,7 +38,6 @@ public class CreateDB extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(dbCreatePages);
         sqLiteDatabase.execSQL(dbCreateCollection);
         sqLiteDatabase.execSQL(dbCreateBookmark);
-        System.out.println("yes");
 
     }
 
