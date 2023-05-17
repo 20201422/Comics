@@ -166,6 +166,7 @@ public class PagesDao extends SQLiteOpenHelper {
                 "pages,collection\n" +
                 "WHERE pages.imageResId = collection.collectionId\n" +
                 "ORDER BY collection.s_number";
+
         Cursor cursor = db.rawQuery(sql,null);
         int resultCounts = cursor.getCount();
         if(resultCounts==0||!cursor.moveToFirst()){
@@ -173,6 +174,13 @@ public class PagesDao extends SQLiteOpenHelper {
         }
 
         for(int i=0;i<resultCounts;i++){
+            String sqlFindName = "select * from book where book_Id = "+cursor.getInt(1);
+            Cursor bookName = db.rawQuery(sqlFindName,null);
+
+            int resultCounts1 = bookName.getCount();
+            if(resultCounts1==0||!bookName.moveToFirst()){
+                return pages;
+            }
             @SuppressLint("Range")
             ComicData comicData = new ComicData(
                     cursor.getInt(0),
@@ -182,6 +190,7 @@ public class PagesDao extends SQLiteOpenHelper {
                     cursor.getInt(4));
             comicData.setCollection(cursor.getInt(5));
             comicData.setBookmark(cursor.getInt(6));
+            comicData.setBookName(bookName.getString(1));
             pages.add(comicData);
             cursor.moveToNext();
         }

@@ -14,6 +14,7 @@ public class ComicData implements Serializable {
     
     private int imageResId;
     private int bookId;
+    private String bookName;
     private String title;
     private String summary;
     private int page;
@@ -88,6 +89,14 @@ public class ComicData implements Serializable {
     
     public void setBookmark(int bookmark) {
         isBookmark = bookmark;
+    }
+
+    public String getBookName() {
+        return bookName;
+    }
+
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
     }
 }
 
