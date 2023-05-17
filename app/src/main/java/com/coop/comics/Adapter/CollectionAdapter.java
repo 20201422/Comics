@@ -89,7 +89,7 @@ public class CollectionAdapter extends BaseAdapter{
         // 设置对应属性
         viewHolder.collection1.setText(String.valueOf(i + 1));
         viewHolder.collection2.setText(bookCollections.get(i).getBookName());
-        viewHolder.collection3.setText("第 " + bookCollections.get(i).getPage() + " 幕");
+        viewHolder.collection3.setText(bookCollections.get(i).getTitle());
 
         return view;
     }
