@@ -37,7 +37,6 @@ public class ComicData implements Serializable {
     public int getImageResId() {
         return imageResId;
     }
-
     
     public void setImageResId(int imageResId) {
         this.imageResId = imageResId;
