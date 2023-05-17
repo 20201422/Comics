@@ -167,16 +167,20 @@ public class CollectionActivity extends AppCompatActivity implements ComicFragme
                 if (nextItem >= adapter.getCount()) {
                     nextItem = 0; // 循环到第一个项
                 }
-
-                if (stopId != -1) {   // 没有书签，不轮播
-                    viewPager.setCurrentItem(nextItem, true);
-                }
-
-                if (currentItem == stopId - 2) {   // 如果到达书签页
+                
+                if (stopId == 1) {  // 解决收藏列表第一个不能停止的bug
                     stopAutoScroll();   // 停止轮播
                 } else {
-                    autoScrollHandler.postDelayed(this, AUTO_SCROLL_DELAY);
-               }
+                    if (stopId != -1) {   // 第一页，不轮播
+                        viewPager.setCurrentItem(nextItem, true);
+                    }
+                    
+                    if (currentItem == stopId - 2) {   // 如果到达收藏页
+                        stopAutoScroll();   // 停止轮播
+                    } else {
+                        autoScrollHandler.postDelayed(this, AUTO_SCROLL_DELAY);
+                    }
+                }
             }
         };
 
