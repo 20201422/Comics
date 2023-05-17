@@ -6,8 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.coop.comics.Model.Bookmark;
 import com.coop.comics.Model.Collection;
+import com.coop.comics.Model.ComicData;
+
 import java.util.ArrayList;
 
 public class CollectionDao extends SQLiteOpenHelper {
@@ -55,9 +56,20 @@ public class CollectionDao extends SQLiteOpenHelper {
      * @param id
      * @return
      */
-    public Collection findPageByCollectionId(int id){
-
-        return null;
+    public ComicData findPageByCollectionId(int id){
+        SQLiteDatabase db = getWritableDatabase();
+        ComicData comicData  = null;
+        String sql = "select * from pages where imageResId = "+id;
+        Cursor cursor = db.rawQuery(sql,null);  //获取对应的书
+        int resultCounts = cursor.getCount();
+        if(resultCounts==0||!cursor.moveToFirst()){
+            return comicData;
+        }
+        comicData = new ComicData(cursor.getInt(0),cursor.getInt(1), cursor.getString(2),
+                cursor.getString(3),cursor.getInt(4));
+        comicData.setCollection(cursor.getInt(5));
+        comicData.setBookmark(cursor.getInt(6));
+        return comicData;
     }
 
     /**

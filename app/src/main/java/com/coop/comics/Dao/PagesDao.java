@@ -13,6 +13,7 @@ import com.coop.comics.Model.Book;
 import com.coop.comics.Model.ComicData;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PagesDao extends SQLiteOpenHelper {
     public PagesDao(Context context) {
@@ -50,7 +51,7 @@ public class PagesDao extends SQLiteOpenHelper {
                     cursor.getString(2),
                     cursor.getString(3),
                     cursor.getInt(4));
-            comicData.setBookmark(cursor.getInt(5));
+            comicData.setCollection(cursor.getInt(5));
             comicData.setBookmark(cursor.getInt(6));
             pages.add(comicData);
             cursor.moveToNext();
@@ -75,7 +76,7 @@ public class PagesDao extends SQLiteOpenHelper {
         newValues.put("book_id",comicData.getBookId());
         newValues.put("book_name",cursor.getString(1));
         newValues.put("page_id",comicData.getPage());
-        db.insert("bookmark",null,newValues);  //插入数据
+        db.insert("collection",null,newValues);  //插入数据
         updatePageCollect(comicData);  //更新状态
     }
 
@@ -156,6 +157,34 @@ public class PagesDao extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         String sql = "update pages set isCollection = 0 where imageResId = "+comicData.getImageResId();
         db.execSQL(sql);
+    }
+
+    public List<ComicData> findAllCollection(){
+        SQLiteDatabase db = getWritableDatabase();
+        ArrayList<ComicData> pages = new ArrayList<ComicData>();
+        String sql = "select * from pages where isCollection=1";
+        Cursor cursor = db.rawQuery(sql,null);
+        int resultCounts = cursor.getCount();
+        if(resultCounts==0||!cursor.moveToFirst()){
+            return pages;
+        }
+
+        for(int i=0;i<resultCounts;i++){
+            @SuppressLint("Range")
+            ComicData comicData = new ComicData(
+                    cursor.getInt(0),
+                    cursor.getInt(1),
+                    cursor.getString(2),
+                    cursor.getString(3),
+                    cursor.getInt(4));
+            comicData.setCollection(cursor.getInt(5));
+            comicData.setBookmark(cursor.getInt(6));
+            pages.add(comicData);
+            cursor.moveToNext();
+        }
+        return pages;
+
+
     }
 
 }

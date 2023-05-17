@@ -1,11 +1,22 @@
 package com.coop.comics.Fragment;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
+import androidx.fragment.app.Fragment;
+
+import com.coop.comics.Adapter.CollectionAdapter;
+import com.coop.comics.Dao.CollectionDao;
+import com.coop.comics.Model.Collection;
 import com.coop.comics.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,7 +33,8 @@ public class CollectionFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    
+
+    private List<Collection> collections = new ArrayList<>();
     public CollectionFragment() {
         // Required empty public constructor
     }
@@ -44,7 +56,14 @@ public class CollectionFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-    
+    public List<Collection> getCollections() {
+        return collections;
+    }
+
+    public void setcollection(List<Collection> collections) {
+        this.collections = collections;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +76,34 @@ public class CollectionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_collection, container, false);
+        View view = inflater.inflate(R.layout.fragment_collection, container, false);
+        if (collections != null) {    // 解决数据重复的问题
+            collections.clear();
+        }
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
+        ListView listView = view.findViewById(R.id.collections_list);
+        getCollection();
+        if (collections.size() != 0) {    // 如果有书签
+            listView.setBackgroundResource(R.drawable.border_radius);   // 添加背景
+        }
+
+        listView.setOnItemClickListener((parent, view1, position, id) -> {
+            Intent intent = new Intent("com.coop.comics.Activity.CollectionActivity");
+            intent.putExtra("stopPage", collections.get(position).getPage()); // 传输书签的页数
+            intent.putExtra("bookId", collections.get(position).getBookId()); // 传输书的id
+
+            startActivity(intent);  // 启动 ComicActivity
+        }); // 收藏
+
+        listView.setAdapter(new CollectionAdapter(collections, getContext()));
+
+        return view;
     }
+    public void getCollection() {
+        // 数据库读取收藏
+        CollectionDao collectionDao = new CollectionDao(requireContext());
+        collections = collectionDao.queryAllCollection();
+    }
+
 }
+
