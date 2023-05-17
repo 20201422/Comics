@@ -11,8 +11,8 @@ import android.widget.ListView;
 import androidx.fragment.app.Fragment;
 
 import com.coop.comics.Adapter.CollectionAdapter;
-import com.coop.comics.Dao.CollectionDao;
-import com.coop.comics.Model.Collection;
+import com.coop.comics.Dao.PagesDao;
+import com.coop.comics.Model.ComicData;
 import com.coop.comics.R;
 
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public class CollectionFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private List<Collection> collections = new ArrayList<>();
+    private List<ComicData> collections = new ArrayList<>();
     public CollectionFragment() {
         // Required empty public constructor
     }
@@ -56,14 +56,15 @@ public class CollectionFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-    public List<Collection> getCollections() {
+    
+    public List<ComicData> getCollections() {
         return collections;
     }
-
-    public void setcollection(List<Collection> collections) {
+    
+    public void setCollections(List<ComicData> collections) {
         this.collections = collections;
     }
-
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,7 +90,7 @@ public class CollectionFragment extends Fragment {
 
         listView.setOnItemClickListener((parent, view1, position, id) -> {
             Intent intent = new Intent("com.coop.comics.Activity.CollectionActivity");
-            intent.putExtra("stopPage", collections.get(position).getS_number()); // 传输书签的页数
+            intent.putExtra("stopPage", collections.get(position).getPage()); // 传输书签的页数
             intent.putExtra("bookId", collections.get(position).getBookId()); // 传输书的id
 
             startActivity(intent);  // 启动 ComicActivity
@@ -101,8 +102,8 @@ public class CollectionFragment extends Fragment {
     }
     public void getCollection() {
         // 数据库读取收藏
-        CollectionDao collectionDao = new CollectionDao(requireContext());
-        collections = collectionDao.queryAllCollection();
+        PagesDao pagesDao = new PagesDao(requireContext());
+        collections = pagesDao.findAllCollection();
     }
 
 }

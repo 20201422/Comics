@@ -44,14 +44,6 @@ public class HomeFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public List<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks(List<Book> books) {
-        this.books = books;
-    }
-
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -68,6 +60,14 @@ public class HomeFragment extends Fragment {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
+    }
+    
+    public List<Book> getBooks() {
+        return books;
+    }
+    
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 
     @Override

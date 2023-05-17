@@ -30,9 +30,11 @@ public class MainActivity extends AppCompatActivity {
     public MainActivity() {
     }
     
-    public MainActivity(ViewPager viewPager, TabLayout tabLayout) {
+    public MainActivity(ViewPager viewPager, TabLayout tabLayout, SQLiteDatabase db, String goWhere) {
         this.viewPager = viewPager;
         this.tabLayout = tabLayout;
+        this.db = db;
+        this.goWhere = goWhere;
     }
     
     public ViewPager getViewPager() {
@@ -49,6 +51,22 @@ public class MainActivity extends AppCompatActivity {
     
     public void setTabLayout(TabLayout tabLayout) {
         this.tabLayout = tabLayout;
+    }
+    
+    public SQLiteDatabase getDb() {
+        return db;
+    }
+    
+    public void setDb(SQLiteDatabase db) {
+        this.db = db;
+    }
+    
+    public String getGoWhere() {
+        return goWhere;
+    }
+    
+    public void setGoWhere(String goWhere) {
+        this.goWhere = goWhere;
     }
     
     @Override

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -33,16 +34,87 @@ public class CollectionActivity extends AppCompatActivity implements ComicFragme
     private Runnable autoScrollRunnable;
     private String[] textSizeButtonText = {"小", "中", "大"};
     private int textSizeIndex = 1; // 默认字体大小的索引值为1
-    private Button changeTextSizeButton;
-
+    
+    public CollectionActivity() {
+    }
+    
+    public CollectionActivity(ViewPager viewPager, ShowCollectionsAdapter adapter, int bookId, int stopId,
+                              Handler autoScrollHandler, Runnable autoScrollRunnable,
+                              String[] textSizeButtonText, int textSizeIndex) {
+        this.viewPager = viewPager;
+        this.adapter = adapter;
+        this.bookId = bookId;
+        this.stopId = stopId;
+        this.autoScrollHandler = autoScrollHandler;
+        this.autoScrollRunnable = autoScrollRunnable;
+        this.textSizeButtonText = textSizeButtonText;
+        this.textSizeIndex = textSizeIndex;
+    }
+    
+    public ViewPager getViewPager() {
+        return viewPager;
+    }
+    
+    public void setViewPager(ViewPager viewPager) {
+        this.viewPager = viewPager;
+    }
+    
+    public ShowCollectionsAdapter getAdapter() {
+        return adapter;
+    }
+    
+    public void setAdapter(ShowCollectionsAdapter adapter) {
+        this.adapter = adapter;
+    }
+    
+    public int getBookId() {
+        return bookId;
+    }
+    
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
+    }
+    
+    public int getStopId() {
+        return stopId;
+    }
+    
+    public void setStopId(int stopId) {
+        this.stopId = stopId;
+    }
+    
+    public Handler getAutoScrollHandler() {
+        return autoScrollHandler;
+    }
+    
+    public void setAutoScrollHandler(Handler autoScrollHandler) {
+        this.autoScrollHandler = autoScrollHandler;
+    }
+    
+    public Runnable getAutoScrollRunnable() {
+        return autoScrollRunnable;
+    }
+    
+    public void setAutoScrollRunnable(Runnable autoScrollRunnable) {
+        this.autoScrollRunnable = autoScrollRunnable;
+    }
+    
+    public String[] getTextSizeButtonText() {
+        return textSizeButtonText;
+    }
+    
+    public void setTextSizeButtonText(String[] textSizeButtonText) {
+        this.textSizeButtonText = textSizeButtonText;
+    }
+    
     public int getTextSizeIndex() {
         return textSizeIndex;
     }
-
+    
     public void setTextSizeIndex(int textSizeIndex) {
         this.textSizeIndex = textSizeIndex;
     }
-
+    
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +125,8 @@ public class CollectionActivity extends AppCompatActivity implements ComicFragme
         Intent intent = getIntent();
         bookId = intent.getIntExtra("bookId", 0);   // 接收到的是int型的bookId，当没接收到默认bookId为0
         stopId = intent.getIntExtra("stopPage", -1);  // 接收传来的书签页数, 没接收到就默认是-1
+        
+        Log.i("asd", String.valueOf(stopId));
 
         adapter = new ShowCollectionsAdapter(getSupportFragmentManager(), getComicData(), textSizeIndex, this);
 
@@ -66,9 +140,7 @@ public class CollectionActivity extends AppCompatActivity implements ComicFragme
         List<ComicData> comicData;
 
         comicData = pagesDao.findAllCollection();
-
-        System.out.println(comicData.size());
-
+        
         return comicData;
     }
 
@@ -100,7 +172,7 @@ public class CollectionActivity extends AppCompatActivity implements ComicFragme
                     viewPager.setCurrentItem(nextItem, true);
                 }
 
-                if (currentItem == stopId) {   // 如果到达书签页
+                if (currentItem == stopId - 2) {   // 如果到达书签页
                     stopAutoScroll();   // 停止轮播
                 } else {
                     autoScrollHandler.postDelayed(this, AUTO_SCROLL_DELAY);

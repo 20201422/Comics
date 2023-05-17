@@ -103,7 +103,6 @@ public class BookAdapter extends BaseAdapter {
     }
     
     private static final class ViewHolder {
-        
         private TextView bookName;
         private RoundedImageView bookPhoto;
         

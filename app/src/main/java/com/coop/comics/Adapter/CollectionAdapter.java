@@ -7,31 +7,31 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.coop.comics.Model.Collection;
+import com.coop.comics.Model.ComicData;
 import com.coop.comics.R;
 
 import java.util.List;
 
 public class CollectionAdapter extends BaseAdapter{
-    private List<Collection> bookcollections;
+    private List<ComicData> bookCollections;
     private Context context;
     private LayoutInflater inflater;
 
     public CollectionAdapter() {
 
     }
-    public CollectionAdapter(List<Collection> bookcollections, Context context) {
-        this.bookcollections = bookcollections;
+    public CollectionAdapter(List<ComicData> bookCollections, Context context) {
+        this.bookCollections = bookCollections;
         this.context = context;
         inflater = LayoutInflater.from(context);
     }
 
-    public List<Collection> getBookcollections() {
-        return bookcollections;
+    public List<ComicData> getBookCollections() {
+        return bookCollections;
     }
 
-    public void setBookcollections(List<Collection> collections) {
-        this.bookcollections = collections;
+    public void setBookCollections(List<ComicData> collections) {
+        this.bookCollections = collections;
     }
 
     public Context getContext() {
@@ -52,7 +52,7 @@ public class CollectionAdapter extends BaseAdapter{
 
     @Override
     public int getCount() {
-        return bookcollections.size();
+        return bookCollections.size();
     }
 
     @Override
@@ -88,8 +88,8 @@ public class CollectionAdapter extends BaseAdapter{
 
         // 设置对应属性
         viewHolder.collection1.setText(String.valueOf(i + 1));
-        viewHolder.collection2.setText(bookcollections.get(i).getBookName());
-        viewHolder.collection3.setText("第 " + bookcollections.get(i).getPage() + " 幕");
+        viewHolder.collection2.setText(bookCollections.get(i).getTitle());
+        viewHolder.collection3.setText("第 " + bookCollections.get(i).getPage() + " 幕");
 
         return view;
     }

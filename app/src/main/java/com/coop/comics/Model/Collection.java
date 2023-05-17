@@ -57,7 +57,6 @@ public class Collection {
     public void setPage(int page) {
         this.page = page;
     }
-
 }
 
 //    may the force be with you.

@@ -31,7 +31,78 @@ public class ComicActivity extends AppCompatActivity implements ComicFragment.Co
     private Runnable autoScrollRunnable;
     private String[] textSizeButtonText = {"小", "中", "大"};
     private int textSizeIndex = 1; // 默认字体大小的索引值为1
-    private Button changeTextSizeButton;
+    
+    public ComicActivity() {
+    }
+    
+    public ComicActivity(ViewPager viewPager, ComicAdapter adapter, int bookId, int stopPage,
+                         Handler autoScrollHandler, Runnable autoScrollRunnable,
+                         String[] textSizeButtonText, int textSizeIndex) {
+        this.viewPager = viewPager;
+        this.adapter = adapter;
+        this.bookId = bookId;
+        this.stopPage = stopPage;
+        this.autoScrollHandler = autoScrollHandler;
+        this.autoScrollRunnable = autoScrollRunnable;
+        this.textSizeButtonText = textSizeButtonText;
+        this.textSizeIndex = textSizeIndex;
+    }
+    
+    public ViewPager getViewPager() {
+        return viewPager;
+    }
+    
+    public void setViewPager(ViewPager viewPager) {
+        this.viewPager = viewPager;
+    }
+    
+    public ComicAdapter getAdapter() {
+        return adapter;
+    }
+    
+    public void setAdapter(ComicAdapter adapter) {
+        this.adapter = adapter;
+    }
+    
+    public int getBookId() {
+        return bookId;
+    }
+    
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
+    }
+    
+    public int getStopPage() {
+        return stopPage;
+    }
+    
+    public void setStopPage(int stopPage) {
+        this.stopPage = stopPage;
+    }
+    
+    public Handler getAutoScrollHandler() {
+        return autoScrollHandler;
+    }
+    
+    public void setAutoScrollHandler(Handler autoScrollHandler) {
+        this.autoScrollHandler = autoScrollHandler;
+    }
+    
+    public Runnable getAutoScrollRunnable() {
+        return autoScrollRunnable;
+    }
+    
+    public void setAutoScrollRunnable(Runnable autoScrollRunnable) {
+        this.autoScrollRunnable = autoScrollRunnable;
+    }
+    
+    public String[] getTextSizeButtonText() {
+        return textSizeButtonText;
+    }
+    
+    public void setTextSizeButtonText(String[] textSizeButtonText) {
+        this.textSizeButtonText = textSizeButtonText;
+    }
     
     public int getTextSizeIndex() {
         return textSizeIndex;

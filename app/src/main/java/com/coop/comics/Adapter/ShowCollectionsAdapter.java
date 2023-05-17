@@ -18,7 +18,8 @@ public class ShowCollectionsAdapter extends FragmentStatePagerAdapter {
     private int textSizeIndex;
     private CollectionActivity activity;
 
-    public ShowCollectionsAdapter(FragmentManager fm, List<ComicData> comicData, int textSizeIndex, CollectionActivity activity) {
+    public ShowCollectionsAdapter(FragmentManager fm, List<ComicData> comicData,
+                                  int textSizeIndex, CollectionActivity activity) {
         super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         this.comicData = comicData;
         this.textSizeIndex = textSizeIndex;
