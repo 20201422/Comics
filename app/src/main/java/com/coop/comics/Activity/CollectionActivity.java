@@ -28,7 +28,7 @@ public class CollectionActivity extends AppCompatActivity implements ComicFragme
     private ShowCollectionsAdapter adapter;
     private int bookId;
     private int stopId;
-    private static final int AUTO_SCROLL_DELAY = 2000; // 延迟时间，单位为毫秒
+    private static final int AUTO_SCROLL_DELAY = 24; // 延迟时间，单位为毫秒
     private Handler autoScrollHandler;
     private Runnable autoScrollRunnable;
     private String[] textSizeButtonText = {"小", "中", "大"};
@@ -100,11 +100,11 @@ public class CollectionActivity extends AppCompatActivity implements ComicFragme
                     viewPager.setCurrentItem(nextItem, true);
                 }
 
-                //if (currentItem == stopId) {   // 如果到达书签页
-                  //  stopAutoScroll();   // 停止轮播
-              //  } else {
+                if (currentItem == stopId) {   // 如果到达书签页
+                    stopAutoScroll();   // 停止轮播
+                } else {
                     autoScrollHandler.postDelayed(this, AUTO_SCROLL_DELAY);
-               // }
+               }
             }
         };
 

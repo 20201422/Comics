@@ -162,7 +162,7 @@ public class PagesDao extends SQLiteOpenHelper {
     public List<ComicData> findAllCollection(){
         SQLiteDatabase db = getWritableDatabase();
         ArrayList<ComicData> pages = new ArrayList<ComicData>();
-        String sql = "SELECT pages.* FROM \n" +
+        String sql = "SELECT pages.imageResId,pages.bookId,pages.title,pages.summary,collection.s_number,pages.isCollection,pages.isBookmark FROM \n" +
                 "pages,collection\n" +
                 "WHERE pages.imageResId = collection.collectionId\n" +
                 "ORDER BY collection.s_number";

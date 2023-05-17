@@ -23,6 +23,17 @@
         </activity>
 
         <activity
+            android:name=".Activity.CollectionActivity"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="com.coop.comics.Activity.CollectionActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity>
+
+        <activity
                 android:name=".Activity.MainActivity"
                 android:exported="true">
             <intent-filter>

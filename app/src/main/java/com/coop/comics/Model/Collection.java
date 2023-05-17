@@ -14,7 +14,7 @@ public class Collection {
     private int bookId;
     private String bookName;
     private int page;
-    private int s_number;
+
     
     public Collection() {
     }
@@ -24,14 +24,6 @@ public class Collection {
         this.bookId = bookId;
         this.bookName = bookName;
         this.page = page;
-    }
-
-    public Collection(int collectionId, int bookId, String bookName, int page, int s_number) {
-        this.collectionId = collectionId;
-        this.bookId = bookId;
-        this.bookName = bookName;
-        this.page = page;
-        this.s_number = s_number;
     }
 
     public int getCollectionId() {
@@ -66,13 +58,6 @@ public class Collection {
         this.page = page;
     }
 
-    public int getS_number() {
-        return s_number;
-    }
-
-    public void setS_number(int s_number) {
-        this.s_number = s_number;
-    }
 }
 
 //    may the force be with you.
