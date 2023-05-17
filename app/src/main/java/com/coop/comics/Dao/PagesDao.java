@@ -181,6 +181,7 @@ public class PagesDao extends SQLiteOpenHelper {
             if(resultCounts1==0||!bookName.moveToFirst()){
                 return pages;
             }
+
             @SuppressLint("Range")
             ComicData comicData = new ComicData(
                     cursor.getInt(0),
