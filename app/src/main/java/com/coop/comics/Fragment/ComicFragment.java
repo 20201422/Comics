@@ -9,8 +9,11 @@
 package com.coop.comics.Fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +26,10 @@ import com.coop.comics.Activity.MainActivity;
 import com.coop.comics.Dao.PagesDao;
 import com.coop.comics.Model.ComicData;
 import com.coop.comics.R;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 
 public class ComicFragment extends Fragment {
@@ -42,9 +49,12 @@ public class ComicFragment extends Fragment {
     private int[] summaryTextSize = {14, 18, 24};   // 内容字体大小
     private int[] pageTextSize = {12, 16, 22};  // 页数字体大小
     private String[] textSizeButtonText = {"小", "中", "大"};  // 字体按钮文字
-    private int textSizeIndex;
+    private int textSizeIndex;  // 字体大小下标
     private ComicFragmentButtonClickListener buttonClickListener;
-
+    
+    private static final String PREFS_NAME = "MyPrefsFile";
+    private static final String FRAGMENT_NAME = "ComicFragment";
+    private long startTime;
 
     public ComicFragment() {
     }
@@ -184,7 +194,32 @@ public class ComicFragment extends Fragment {
     public void setButtonClickListener(ComicFragmentButtonClickListener buttonClickListener) {
         this.buttonClickListener = buttonClickListener;
     }
-
+    
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // 获取当前时间
+        startTime = System.currentTimeMillis();
+    }
+    
+    @Override
+    public void onResume() {
+        super.onResume();
+        
+        // 加载保存的时间
+        SharedPreferences settings = getActivity().getSharedPreferences(PREFS_NAME, 0);
+        int totalTime = settings.getInt(FRAGMENT_NAME, 0);
+        
+        // 计算累计时间并保存
+        long endTime = System.currentTimeMillis();
+        long elapsedTime = endTime - startTime;
+        totalTime += elapsedTime / 1000; // 转换为秒
+        
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt(FRAGMENT_NAME, totalTime);
+        editor.apply();
+    }
+    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_comic, container, false);
@@ -196,7 +231,7 @@ public class ComicFragment extends Fragment {
         bookmarkButton = view.findViewById(R.id.bookmark_button);    // 获取书签按钮组件
         textSizeButton = view.findViewById(R.id.text_size_button);  // 获取字体按钮组件
         textReadButton = view.findViewById(R.id.text_read_button);  // 获取朗读按钮组件
-
+        
         Bundle bundle = getArguments();   // 接收数据
         if (bundle != null) {
             comicData = (ComicData) bundle.getSerializable("comicData");
@@ -232,8 +267,8 @@ public class ComicFragment extends Fragment {
         return view;
     }
 
-    @SuppressLint("SetTextI18n")
-    public void modifyStyle() { // 界面处理
+    @SuppressLint("SetTextI18n")    // 界面处理
+    public void modifyStyle() {
 
         // 页处理
         if (comicData.getPage() == -1) {   // 是封面页
@@ -345,6 +380,7 @@ public class ComicFragment extends Fragment {
     public interface ComicFragmentButtonClickListener {
         void onTextSizeButtonClick();
     }
+    
 }
 
 //    may the force be with you.

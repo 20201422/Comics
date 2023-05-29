@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -220,4 +219,5 @@ public class ComicActivity extends AppCompatActivity implements ComicFragment.Co
     public void onTextSizeButtonClick() {
         changeTextSize();
     }
+    
 }

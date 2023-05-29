@@ -35,6 +35,8 @@ public class CollectionFragment extends Fragment {
     private String mParam2;
 
     private List<ComicData> collections = new ArrayList<>();
+    private ListView listView;
+    
     public CollectionFragment() {
         // Required empty public constructor
     }
@@ -75,31 +77,46 @@ public class CollectionFragment extends Fragment {
     }
     
     @Override
+    public void onResume() {
+        // 数据库读取收藏
+        super.onResume();
+        showCollections();
+    }
+    
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_collection, container, false);
+        
         if (collections != null) {    // 解决数据重复的问题
             collections.clear();
         }
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
-        ListView listView = view.findViewById(R.id.collections_list);
+        
+        listView = view.findViewById(R.id.collections_list);
+        
+        showCollections();
+
+        return view;
+    }
+    
+    public void showCollections() {
         getCollection();
+        
         if (collections.size() != 0) {    // 如果有书签
             listView.setBackgroundResource(R.drawable.border_radius);   // 添加背景
         }
-
+        
         listView.setOnItemClickListener((parent, view1, position, id) -> {
             Intent intent = new Intent("com.coop.comics.Activity.CollectionActivity");
             intent.putExtra("stopPage", collections.get(position).getPage()); // 传输书签的页数
             intent.putExtra("bookId", collections.get(position).getBookId()); // 传输书的id
-
+            
             startActivity(intent);  // 启动 ComicActivity
         }); // 收藏
-
+        
         listView.setAdapter(new CollectionAdapter(collections, getContext()));
-
-        return view;
     }
+    
     public void getCollection() {
         // 数据库读取收藏
         PagesDao pagesDao = new PagesDao(requireContext());

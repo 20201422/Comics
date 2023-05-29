@@ -1,9 +1,7 @@
 package com.coop.comics.Fragment;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
@@ -34,6 +32,7 @@ public class BookmarkFragment extends Fragment {
     private String mParam2;
     
     private List<Bookmark> bookmarks = new ArrayList<>();
+    private ListView listView;
     
     public BookmarkFragment() {
         // Required empty public constructor
@@ -75,6 +74,13 @@ public class BookmarkFragment extends Fragment {
     }
     
     @Override
+    public void onResume() {
+        // 数据库读取收藏
+        super.onResume();
+        showBookmarks();
+    }
+    
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bookmark, container, false);
@@ -83,15 +89,20 @@ public class BookmarkFragment extends Fragment {
             bookmarks.clear();
         }
         
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
-        ListView listView = view.findViewById(R.id.bookmark_list);
+        listView = view.findViewById(R.id.bookmark_list);
         
-        getBookmark(); // 数据库读取书签
+        showBookmarks();
 
+        return view;
+    }
+    
+    private void showBookmarks() {
+        getBookmark(); // 数据库读取书签
+        
         if (bookmarks.size() != 0) {    // 如果有书签
             listView.setBackgroundResource(R.drawable.border_radius);   // 添加背景
         }
-
+        
         listView.setOnItemClickListener((parent, view1, position, id) -> {
             Intent intent = new Intent("com.coop.comics.Activity.ComicActivity");
             intent.putExtra("stopPage", bookmarks.get(position).getPage()); // 传输书签的页数
@@ -101,8 +112,6 @@ public class BookmarkFragment extends Fragment {
         }); // 点击书签
         
         listView.setAdapter(new BookmarkAdapter(bookmarks, getContext()));
-
-        return view;
     }
     
     public void getBookmark() {
@@ -110,4 +119,5 @@ public class BookmarkFragment extends Fragment {
         BookmarkDao bookmarkDao = new BookmarkDao(requireContext());
         bookmarks = bookmarkDao.queryAllBookmark();
     }
+    
 }
