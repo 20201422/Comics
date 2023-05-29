@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.coop.comics.Model.ComicData;
 import com.coop.comics.R;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;
 
@@ -87,7 +88,7 @@ public class CollectionAdapter extends BaseAdapter{
         }
 
         // 设置对应属性
-        viewHolder.collection1.setText(String.valueOf(i + 1));
+        viewHolder.collection1.setBackgroundResource(R.mipmap.a01_breif);
         viewHolder.collection2.setText(bookCollections.get(i).getBookName());
         viewHolder.collection3.setText(bookCollections.get(i).getTitle());
 
@@ -96,7 +97,7 @@ public class CollectionAdapter extends BaseAdapter{
 
     private static final class ViewHolder {
 
-        private TextView collection1;
+        private RoundedImageView collection1;
         private TextView collection2;
         private TextView collection3;
 

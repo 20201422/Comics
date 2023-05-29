@@ -26,156 +26,165 @@ import com.coop.comics.R;
 
 
 public class ComicFragment extends Fragment {
-    
-    ImageView imageView;
-    TextView titleView;
-    TextView summaryView;
-    TextView pageView;
-    Button collectionButton;
-    Button bookmarkButton;
-    Button textSizeButton;
-    private ComicData comicData;
-    private int page;
-    private int sumPages;
-    private int[] titleTextSize = {18, 22, 32};
-    private int[] summaryTextSize = {14, 18, 24};
-    private int[] pageTextSize = {12, 16, 22};
-    private String[] textSizeButtonText = {"小", "中", "大"};
+
+    ImageView imageView;    // 图片
+    TextView titleView; // 标题
+    TextView summaryView;   // 内容
+    TextView pageView;  // 页数
+    Button collectionButton;    // 收藏按钮
+    Button bookmarkButton;  // 书签按钮
+    Button textSizeButton;  // 字体大小按钮
+    Button textReadButton;  // 朗读按钮
+    private ComicData comicData;    // 连环画数据
+    private int page;   // 页
+    private int sumPages;   // 总页数
+    private int[] titleTextSize = {18, 22, 32}; // 标题字体大小
+    private int[] summaryTextSize = {14, 18, 24};   // 内容字体大小
+    private int[] pageTextSize = {12, 16, 22};  // 页数字体大小
+    private String[] textSizeButtonText = {"小", "中", "大"};  // 字体按钮文字
     private int textSizeIndex;
     private ComicFragmentButtonClickListener buttonClickListener;
-    
-    
+
+
     public ComicFragment() {
     }
-    
+
     public ImageView getImageView() {
         return imageView;
     }
-    
+
     public void setImageView(ImageView imageView) {
         this.imageView = imageView;
     }
-    
+
     public TextView getTitleView() {
         return titleView;
     }
-    
+
     public void setTitleView(TextView titleView) {
         this.titleView = titleView;
     }
-    
+
     public TextView getSummaryView() {
         return summaryView;
     }
-    
+
     public void setSummaryView(TextView summaryView) {
         this.summaryView = summaryView;
     }
-    
+
     public TextView getPageView() {
         return pageView;
     }
-    
+
     public void setPageView(TextView pageView) {
         this.pageView = pageView;
     }
-    
+
     public Button getCollectionButton() {
         return collectionButton;
     }
-    
+
     public void setCollectionButton(Button collectionButton) {
         this.collectionButton = collectionButton;
     }
-    
+
     public Button getBookmarkButton() {
         return bookmarkButton;
     }
-    
+
     public void setBookmarkButton(Button bookmarkButton) {
         this.bookmarkButton = bookmarkButton;
     }
-    
+
     public Button getTextSizeButton() {
         return textSizeButton;
     }
-    
+
     public void setTextSizeButton(Button textSizeButton) {
         this.textSizeButton = textSizeButton;
     }
-    
+
+    public Button getTextReadButton() {
+        return textReadButton;
+    }
+
+    public void setTextReadButton(Button textReadButton) {
+        this.textReadButton = textReadButton;
+    }
+
     public ComicData getComicData() {
         return comicData;
     }
-    
+
     public void setComicData(ComicData comicData) {
         this.comicData = comicData;
     }
-    
+
     public int getPage() {
         return page;
     }
-    
+
     public void setPage(int page) {
         this.page = page;
     }
-    
+
     public int getSumPages() {
         return sumPages;
     }
-    
+
     public void setSumPages(int sumPages) {
         this.sumPages = sumPages;
     }
-    
+
     public int[] getTitleTextSize() {
         return titleTextSize;
     }
-    
+
     public void setTitleTextSize(int[] titleTextSize) {
         this.titleTextSize = titleTextSize;
     }
-    
+
     public int[] getSummaryTextSize() {
         return summaryTextSize;
     }
-    
+
     public void setSummaryTextSize(int[] summaryTextSize) {
         this.summaryTextSize = summaryTextSize;
     }
-    
+
     public int[] getPageTextSize() {
         return pageTextSize;
     }
-    
+
     public void setPageTextSize(int[] pageTextSize) {
         this.pageTextSize = pageTextSize;
     }
-    
+
     public String[] getTextSizeButtonText() {
         return textSizeButtonText;
     }
-    
+
     public void setTextSizeButtonText(String[] textSizeButtonText) {
         this.textSizeButtonText = textSizeButtonText;
     }
-    
+
     public int getTextSizeIndex() {
         return textSizeIndex;
     }
-    
+
     public void setTextSizeIndex(int textSizeIndex) {
         this.textSizeIndex = textSizeIndex;
     }
-    
+
     public ComicFragmentButtonClickListener getButtonClickListener() {
         return buttonClickListener;
     }
-    
+
     public void setButtonClickListener(ComicFragmentButtonClickListener buttonClickListener) {
         this.buttonClickListener = buttonClickListener;
     }
-    
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_comic, container, false);
@@ -186,7 +195,8 @@ public class ComicFragment extends Fragment {
         collectionButton = view.findViewById(R.id.collection_button);    // 获取收藏按钮组件
         bookmarkButton = view.findViewById(R.id.bookmark_button);    // 获取书签按钮组件
         textSizeButton = view.findViewById(R.id.text_size_button);  // 获取字体按钮组件
-        
+        textReadButton = view.findViewById(R.id.text_read_button);  // 获取朗读按钮组件
+
         Bundle bundle = getArguments();   // 接收数据
         if (bundle != null) {
             comicData = (ComicData) bundle.getSerializable("comicData");
@@ -194,18 +204,22 @@ public class ComicFragment extends Fragment {
             textSizeIndex = bundle.getInt("textSizeIndex");
         }
         setPage(comicData.getPage());   // 设置页数
-        
+
         modifyStyle();  // 修改样式以及嵌入数据
-        
-        textSizeButton.setOnClickListener(v -> {
+
+        textSizeButton.setOnClickListener(v -> {    // 点击字体大小按钮事件
             if (buttonClickListener != null) {
                 buttonClickListener.onTextSizeButtonClick();
             }
         });
-        
-        collectionButton.setOnClickListener(v -> collectionClick()); // 点击收藏按钮
-        bookmarkButton.setOnClickListener(v -> bookmarkClick());    // 点击书签按钮
-        
+
+        textReadButton.setOnClickListener(v -> {    // 点击朗读按钮事件
+
+        });
+
+        collectionButton.setOnClickListener(v -> collectionClick()); // 点击收藏按钮事件
+        bookmarkButton.setOnClickListener(v -> bookmarkClick());    // 点击书签按钮事件
+
         collectionButton.setOnLongClickListener(v -> {  // 长按收藏按钮跳转到收藏Fragment
             longCollectionClick();
             return true; // 事件已处理
@@ -217,18 +231,18 @@ public class ComicFragment extends Fragment {
 
         return view;
     }
-    
+
     @SuppressLint("SetTextI18n")
     public void modifyStyle() { // 界面处理
-        
+
         // 页处理
         if (comicData.getPage() == -1) {   // 是封面页
             ViewGroup.LayoutParams layoutParamsForImage = imageView.getLayoutParams();  // 获取当前 ImageView 的布局参数
             layoutParamsForImage.height = 1240;    // 设置高度值
             imageView.setLayoutParams(layoutParamsForImage);    // 应用新的布局参数
-            
+
             titleView.setTextSize(42);  // 放大标题字体
-            
+
             ViewGroup.MarginLayoutParams layoutParamsForSummary = (ViewGroup.MarginLayoutParams)
                     summaryView.getLayoutParams(); // 获取当前 TextView 的布局参数
             layoutParamsForSummary.topMargin = -50;   // 设置上边距值
@@ -239,18 +253,18 @@ public class ComicFragment extends Fragment {
         } else {    // 是正文页
             pageView.setVisibility(View.VISIBLE);   // 页数可见
             pageView.setText("第 " + comicData.getPage() + " 页/共 " + sumPages + " 页");
-            
+
             collectionButton.setVisibility(View.VISIBLE);   // 收藏按钮可见
             bookmarkButton.setVisibility(View.VISIBLE); // 书签按钮可见
             textSizeButton.setVisibility(View.VISIBLE); // 字体大小按钮可见
         }
-        
+
         // 内容处理
         if (comicData.getSummary() != null && !comicData.getSummary().equals("")
                 && comicData.getPage() >= 0) {  // 如果有内容并且不是标题页
             summaryView.setBackgroundResource(R.drawable.border_radius);    // 设置背景
         }
-        
+
         // 按钮处理
         if (comicData.isCollection() == 1) { // 如果已经是收藏的了 修改按钮样式
             collectionButton.setBackgroundResource(R.drawable.collection_round_button_background);
@@ -258,13 +272,13 @@ public class ComicFragment extends Fragment {
         if (comicData.isBookmark() == 1) {   // 如果已经有书签了 修改按钮样式
             bookmarkButton.setBackgroundResource(R.drawable.bookmark_round_button_background);
         }
-        
+
         // 文本处理
         imageView.setImageResource(comicData.getImageResId());  // 添加图片到组件
         titleView.setText(comicData.getTitle());   // 添加标题到组件
         summaryView.setText(comicData.getSummary());   // 添加内容到组件
         textSizeButton.setText(textSizeButtonText[textSizeIndex]); // 添加字体大小到组件
-        
+
         // 字体大小处理
         if (comicData.getPage() >= 0) {
             titleView.setTextSize(titleTextSize[textSizeIndex]);    // 改变标题大小
@@ -273,7 +287,7 @@ public class ComicFragment extends Fragment {
             textSizeButton.setText(textSizeButtonText[textSizeIndex]);  // 改变字体大小按钮的字体
         }
     }
-    
+
     private void collectionClick() { // 收藏按钮
         PagesDao pagesDao = new PagesDao(requireContext());
         if (comicData.isCollection() == 1) {   // 已经在收藏了
@@ -288,7 +302,7 @@ public class ComicFragment extends Fragment {
             collectionButton.setBackgroundResource(R.drawable.collection_round_button_background);    // 修改按钮样式
         }
     }
-    
+
     private void bookmarkClick() {   // 书签按钮
         PagesDao pagesDao = new PagesDao(requireContext());
         if (comicData.isBookmark() == 1) {   // 已经有书签了
@@ -303,23 +317,23 @@ public class ComicFragment extends Fragment {
             bookmarkButton.setBackgroundResource(R.drawable.bookmark_round_button_background);  // 修改按钮样式
         }
     }
-    
+
     private void longCollectionClick() {    // 长按收藏按钮
         Intent intent = new Intent(getActivity(), MainActivity.class);  // 创建跳转到目标 Activity 的 Intent
         intent.putExtra("goWhere", "collection");   // 去收藏Fragment
         startActivity(intent);  // 启动目标 Activity
     }
-    
+
     private void longBookmarkClick() {  // 长按书签按钮
         Intent intent = new Intent(getActivity(), MainActivity.class);  // 创建跳转到目标 Activity 的 Intent
         intent.putExtra("goWhere", "bookmark"); // 去书签Fragment
         startActivity(intent);  // 启动目标 Activity
     }
-    
+
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {   // 自动轮播
         super.setUserVisibleHint(isVisibleToUser);
-        
+
         if (isVisibleToUser && getActivity() != null) {
             if (getActivity() instanceof ComicActivity) {
                 ComicActivity comicActivity = (ComicActivity) getActivity();
@@ -327,7 +341,7 @@ public class ComicFragment extends Fragment {
             }
         }
     }
-    
+
     public interface ComicFragmentButtonClickListener {
         void onTextSizeButtonClick();
     }
