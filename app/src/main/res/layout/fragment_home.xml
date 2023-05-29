@@ -66,6 +66,13 @@
                     android:layout_height="wrap_content" android:id="@+id/textView2" android:textAlignment="center"
                     android:layout_marginBottom="8dp" android:layout_marginTop="8dp"/>
         </LinearLayout>
+        <TextView
+                android:text=""
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/timeTextView"
+                android:textSize="24sp"
+                android:textAlignment="center"/>
         <ImageView
                 android:src="@mipmap/nchu"
                 android:layout_width="match_parent"
