@@ -125,8 +125,6 @@ public class CollectionActivity extends AppCompatActivity implements ComicFragme
         Intent intent = getIntent();
         bookId = intent.getIntExtra("bookId", 0);   // 接收到的是int型的bookId，当没接收到默认bookId为0
         stopId = intent.getIntExtra("stopPage", -1);  // 接收传来的书签页数, 没接收到就默认是-1
-        
-        Log.i("asd", String.valueOf(stopId));
 
         adapter = new ShowCollectionsAdapter(getSupportFragmentManager(), getComicData(), textSizeIndex, this);
 

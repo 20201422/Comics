@@ -1,5 +1,6 @@
 package com.coop.comics.Activity;
 
+import android.content.SharedPreferences;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,6 +19,8 @@ import com.coop.comics.Fragment.HomeFragment;
 import com.coop.comics.R;
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private SQLiteDatabase db;
     private String goWhere;
+    private static final String PREFS_NAME = "MyPrefsFile";
     
     public MainActivity() {
     }
@@ -70,6 +74,12 @@ public class MainActivity extends AppCompatActivity {
     }
     
     @Override
+    public void onBackPressed() {
+        recreate(); // 重新创建Activity实例
+    }
+    
+    
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -77,13 +87,26 @@ public class MainActivity extends AppCompatActivity {
         db = new CreateDB(this).getDb();
         BookDao bookDao = new BookDao(this);
         Cursor results = db.query("book",null,null,null,null,null,null);
-        if(results.getCount()==0)
+        if(results.getCount() == 0)
             bookDao.initBook();   //初始化数据库
         
         goWhere = getIntent().getStringExtra("goWhere");  // 获取跳转的 Fragment
 
         viewPager = findViewById(R.id.view_pager);
         tabLayout = findViewById(R.id.tab_layout);
+        
+        // 检查是否是每天的第一次启动
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        Calendar today = Calendar.getInstance();
+        int lastDay = settings.getInt("lastDay", 0);
+        
+        if (lastDay != today.get(Calendar.DAY_OF_MONTH)) {
+            // 是每天的第一次启动，重置时间
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putInt("totalTime", 0);
+            editor.putInt("lastDay", today.get(Calendar.DAY_OF_MONTH));
+            editor.apply();
+        }
         
         // 初始化 ViewPager 和 TabLayout
         initViewPagerAndTabs();

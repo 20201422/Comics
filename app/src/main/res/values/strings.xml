@@ -12,5 +12,7 @@
     <string name="book_1_page_4">高山猛然跳起把机枪砸碎,拾起一支步枪继续向敌人射击。</string>
     <string name="bookmark">书签</string>
     <string name="reading">阅读中</string>
+    <string name="read_hint">每天阅读1小时，你会受益一辈子</string>
+    <string name="read_title">今日已经阅读</string>
 
 </resources>
