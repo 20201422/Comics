@@ -43,6 +43,7 @@ public class HomeFragment extends Fragment {
     private String mParam2;
     private List<Book> books = new ArrayList<>();
     private TextView timeTextView;
+    private TextView timeTitleTextView;
     private static final String PREFS_NAME = "MyPrefsFile";
     private static final String FRAGMENT_NAME = "ComicFragment";
     
@@ -101,6 +102,8 @@ public class HomeFragment extends Fragment {
         int totalTime = settings.getInt(FRAGMENT_NAME, 0);
         if (totalTime == 0) {
             timeTextView.setText("今天还没有阅读哦，快开始今天的阅读吧！");
+            timeTextView.setTextSize(24);
+            timeTitleTextView.setVisibility(View.GONE);
         } else {
             timeTextView.setText(formatTime(totalTime));
         }
@@ -122,6 +125,7 @@ public class HomeFragment extends Fragment {
         gridView.setAdapter(new BookAdapter(books, requireContext()));
         
         timeTextView = view.findViewById(R.id.timeTextView);
+        timeTitleTextView = view.findViewById(R.id.timeTextView_title);
         
         gridView.setOnItemClickListener((adapterView, view1, i, l) -> {
             Intent intent = new Intent("com.coop.comics.Activity.ComicActivity");
@@ -146,8 +150,6 @@ public class HomeFragment extends Fragment {
         
         StringBuilder stringBuilder = new StringBuilder();
         
-        stringBuilder.append("今日已经阅读了\n");
-        
         if (hours > 0) {
             stringBuilder.append(hours).append("小时");
         }
@@ -159,8 +161,6 @@ public class HomeFragment extends Fragment {
         if (seconds > 0 || (hours == 0 && minutes == 0)) {
             stringBuilder.append(seconds).append("秒");
         }
-        
-        stringBuilder.append("\n每天阅读1小时，你会受益一辈子");
         
         return stringBuilder.toString();
     }
