@@ -16,6 +16,7 @@ import android.graphics.drawable.Drawable;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.speech.tts.UtteranceProgressListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+
 import com.coop.comics.Activity.ComicActivity;
 import com.coop.comics.Activity.MainActivity;
 import com.coop.comics.Dao.PagesDao;
@@ -53,6 +56,7 @@ public class ComicFragment extends Fragment implements TextToSpeech.OnInitListen
     private int page;   // 页
     private int sumPages;   // 总页数
     TextToSpeech tts=null; //语音播报
+    UtteranceProgressListener utteranceProgressListener;//语音监听
     private int[] titleTextSize = {18, 22, 32}; // 标题字体大小
     private int[] summaryTextSize = {14, 18, 24};   // 内容字体大小
     private int[] pageTextSize = {12, 16, 22};  // 页数字体大小
@@ -241,6 +245,36 @@ public class ComicFragment extends Fragment implements TextToSpeech.OnInitListen
         textReadButton = view.findViewById(R.id.text_read_button);  // 获取朗读按钮组件
         tts =  new TextToSpeech(requireContext(),this);
         tts.setPitch(0.5f); //设置声音越小声音越粗，1.0是常规
+        View activity_comicView = inflater.inflate(R.layout.activity_comic, container, false);
+
+
+        utteranceProgressListener = new UtteranceProgressListener() {
+            @Override
+            public void onStart(String s) {
+                System.out.println("开始朗读");
+
+            }
+
+            @Override
+            public void onDone(String s) {
+                ViewPager viewPager = activity_comicView.findViewById(R.id.view_pager);
+                int currentItem = 0;
+                if(viewPager!=null){
+                    currentItem = viewPager.getCurrentItem();
+                }else {
+                    System.out.println("viewpager为空");
+                }
+                System.out.println("朗读结束");
+                textReadButton.setBackground(requireContext().getDrawable(R.drawable.not_read_button_background));
+                System.out.println(currentItem);
+                viewPager.setCurrentItem(currentItem+1);
+            }
+
+            @Override
+            public void onError(String s) {
+
+            }
+        };
         Bundle bundle = getArguments();   // 接收数据
         if (bundle != null) {
             comicData = (ComicData) bundle.getSerializable("comicData");
@@ -261,7 +295,7 @@ public class ComicFragment extends Fragment implements TextToSpeech.OnInitListen
             if(textReadButton.getHint().equals("未读")){
                 textReadButton.setHint("在读");
                 textReadButton.setBackground(this.getResources().getDrawable(R.drawable.read_button_background));
-                tts.speak(comicData.getTitle()+"...   "+comicData.getSummary(),TextToSpeech.QUEUE_FLUSH, null);
+                tts.speak(comicData.getTitle()+"...   "+comicData.getSummary(),TextToSpeech.QUEUE_FLUSH, null,"1");
 
             }else {
                 textReadButton.setHint("未读");
@@ -398,7 +432,7 @@ public class ComicFragment extends Fragment implements TextToSpeech.OnInitListen
     @Override
     public void onInit(int status) {  //初始化语音
         if (status == tts.SUCCESS) {
-
+            tts.setOnUtteranceProgressListener(utteranceProgressListener);
             int result1 = tts.setLanguage(Locale.CHINA);
 
             if (result1 == TextToSpeech.LANG_MISSING_DATA
