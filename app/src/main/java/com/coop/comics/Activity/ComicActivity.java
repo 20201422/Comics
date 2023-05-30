@@ -155,6 +155,7 @@ public class ComicActivity extends AppCompatActivity implements ComicFragment.Co
         autoScrollRunnable = new Runnable() {
             @Override
             public void run() {
+                System.out.println("下一页");
                 int currentItem = viewPager.getCurrentItem();
                 int nextItem = currentItem + 1;
                 

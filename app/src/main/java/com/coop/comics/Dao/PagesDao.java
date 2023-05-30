@@ -104,6 +104,7 @@ public class PagesDao extends SQLiteOpenHelper {
             return ;
         }
         ContentValues newValues = new ContentValues();   //存放书签内容
+        newValues.put("imageResId",comicData.getImageResId());
         newValues.put("bookmarkId",comicData.getImageResId());
         newValues.put("book_id",comicData.getBookId());
         newValues.put("book_name",cursor.getString(1));

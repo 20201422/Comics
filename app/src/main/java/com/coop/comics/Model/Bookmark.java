@@ -11,6 +11,7 @@ package com.coop.comics.Model;
 import java.io.Serializable;
 
 public class Bookmark implements Serializable {
+    private int imageResId; //图片
     private int bookmarkId; // 书签id
     private int bookId; // 书id
     private String bookName;    // 书名称
@@ -18,14 +19,23 @@ public class Bookmark implements Serializable {
     
     public Bookmark() {
     }
-    
-    public Bookmark(int bookmarkId, int bookId, String bookName, int page) {
+
+    public Bookmark(int imageResId, int bookmarkId, int bookId, String bookName, int page) {
+        this.imageResId = imageResId;
         this.bookmarkId = bookmarkId;
         this.bookId = bookId;
         this.bookName = bookName;
         this.page = page;
     }
-    
+
+    public int getImageResId() {
+        return imageResId;
+    }
+
+    public void setImageResId(int imageResId) {
+        this.imageResId = imageResId;
+    }
+
     public int getBookmarkId() {
         return bookmarkId;
     }

@@ -46,7 +46,7 @@ public class BookmarkDao extends SQLiteOpenHelper {
 
         for(int i=0;i<resultCounts;i++){
             @SuppressLint("Range")
-            Bookmark bookmark = new Bookmark(results.getInt(0),results.getInt(1),results.getString(2),results.getInt(3));
+            Bookmark bookmark = new Bookmark(results.getInt(0),results.getInt(1),results.getInt(2),results.getString(3),results.getInt(4));
             list.add(bookmark);
             results.moveToNext();
         }
