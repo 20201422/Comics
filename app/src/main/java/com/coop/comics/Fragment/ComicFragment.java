@@ -251,7 +251,7 @@ public class ComicFragment extends Fragment implements TextToSpeech.OnInitListen
         utteranceProgressListener = new UtteranceProgressListener() {
             @Override
             public void onStart(String s) {
-                System.out.println("开始朗读");
+                System.out.println("开始朗读") ;
 
             }
 
