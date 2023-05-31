@@ -243,8 +243,10 @@ public class ComicFragment extends Fragment implements TextToSpeech.OnInitListen
         bookmarkButton = view.findViewById(R.id.bookmark_button);    // 获取书签按钮组件
         textSizeButton = view.findViewById(R.id.text_size_button);  // 获取字体按钮组件
         textReadButton = view.findViewById(R.id.text_read_button);  // 获取朗读按钮组件
+        
         tts =  new TextToSpeech(requireContext(),this);
-        tts.setPitch(0.5f); //设置声音越小声音越粗，1.0是常规
+        tts.setPitch(0.8f); //设置声音越小声音越粗，1.0是常规
+        
         View activity_comicView = inflater.inflate(R.layout.activity_comic, container, false);
 
 
