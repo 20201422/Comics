@@ -88,7 +88,7 @@ public class CollectionAdapter extends BaseAdapter{
         }
 
         // 设置对应属性
-        viewHolder.collection1.setBackgroundResource(R.mipmap.a01_breif);
+        viewHolder.collection1.setBackgroundResource((bookCollections.get(i).getImageResId()));
         viewHolder.collection2.setText(bookCollections.get(i).getBookName());
         viewHolder.collection3.setText(bookCollections.get(i).getTitle());
 

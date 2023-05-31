@@ -72,6 +72,7 @@ public class PagesDao extends SQLiteOpenHelper {
             return ;
         }
         ContentValues newValues = new ContentValues();   //存放收藏内容
+        newValues.put("imageResId",comicData.getImageResId());
         newValues.put("collectionId",comicData.getImageResId());
         newValues.put("book_id",comicData.getBookId());
         newValues.put("book_name",cursor.getString(1));

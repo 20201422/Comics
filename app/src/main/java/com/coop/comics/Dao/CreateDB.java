@@ -22,7 +22,8 @@ public class CreateDB extends SQLiteOpenHelper {
             ",isCollection integer" +
             ",isBookmark integer)";
     private static final String dbCreateCollection = "create table collection(" +
-            "collectionId integer " +
+            "imageResId integer" +
+            ",collectionId integer " +
             ",book_id integer" +
             ",book_name text" +
             ",page_id integer" +

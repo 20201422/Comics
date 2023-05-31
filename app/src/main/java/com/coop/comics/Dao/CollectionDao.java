@@ -43,7 +43,7 @@ public class CollectionDao extends SQLiteOpenHelper {
 
         for(int i=0;i<resultCounts;i++){
             @SuppressLint("Range")
-            Collection collection = new Collection(results.getInt(0),results.getInt(1),results.getString(2),results.getInt(3));
+            Collection collection = new Collection(results.getInt(0),results.getInt(1),results.getInt(2),results.getString(3),results.getInt(4));
             list.add(collection);
             results.moveToNext();
         }

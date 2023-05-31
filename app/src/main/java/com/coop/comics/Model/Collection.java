@@ -9,6 +9,7 @@
 package com.coop.comics.Model;
 
 public class Collection {
+    private int imageResId; //图片
     
     private int collectionId;
     private int bookId;
@@ -18,8 +19,9 @@ public class Collection {
     
     public Collection() {
     }
-    
-    public Collection(int collectionId, int bookId,String bookName, int page) {
+
+    public Collection(int imageResId, int collectionId, int bookId, String bookName, int page) {
+        this.imageResId = imageResId;
         this.collectionId = collectionId;
         this.bookId = bookId;
         this.bookName = bookName;
