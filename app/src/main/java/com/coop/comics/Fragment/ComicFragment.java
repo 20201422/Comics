@@ -9,15 +9,12 @@
 package com.coop.comics.Fragment;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
+import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,12 +32,7 @@ import com.coop.comics.Dao.PagesDao;
 import com.coop.comics.Model.ComicData;
 import com.coop.comics.R;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
-
-import java.util.Locale;
-
 
 public class ComicFragment extends Fragment implements TextToSpeech.OnInitListener{
 
@@ -63,150 +55,191 @@ public class ComicFragment extends Fragment implements TextToSpeech.OnInitListen
     private String[] textSizeButtonText = {"小", "中", "大"};  // 字体按钮文字
     private int textSizeIndex;  // 字体大小下标
     private ComicFragmentButtonClickListener buttonClickListener;
-
+    private float[] voice = {0.5f, 0.8f, 1.0f}; // 朗读音色
+    private int voiceIndex = 1;
     private static final String PREFS_NAME = "MyPrefsFile";
     private static final String FRAGMENT_NAME = "ComicFragment";
     private long startTime;
 
     public ComicFragment() {
     }
-
+    
     public ImageView getImageView() {
         return imageView;
     }
-
+    
     public void setImageView(ImageView imageView) {
         this.imageView = imageView;
     }
-
+    
     public TextView getTitleView() {
         return titleView;
     }
-
+    
     public void setTitleView(TextView titleView) {
         this.titleView = titleView;
     }
-
+    
     public TextView getSummaryView() {
         return summaryView;
     }
-
+    
     public void setSummaryView(TextView summaryView) {
         this.summaryView = summaryView;
     }
-
+    
     public TextView getPageView() {
         return pageView;
     }
-
+    
     public void setPageView(TextView pageView) {
         this.pageView = pageView;
     }
-
+    
     public Button getCollectionButton() {
         return collectionButton;
     }
-
+    
     public void setCollectionButton(Button collectionButton) {
         this.collectionButton = collectionButton;
     }
-
+    
     public Button getBookmarkButton() {
         return bookmarkButton;
     }
-
+    
     public void setBookmarkButton(Button bookmarkButton) {
         this.bookmarkButton = bookmarkButton;
     }
-
+    
     public Button getTextSizeButton() {
         return textSizeButton;
     }
-
+    
     public void setTextSizeButton(Button textSizeButton) {
         this.textSizeButton = textSizeButton;
     }
-
+    
     public Button getTextReadButton() {
         return textReadButton;
     }
-
+    
     public void setTextReadButton(Button textReadButton) {
         this.textReadButton = textReadButton;
     }
-
+    
     public ComicData getComicData() {
         return comicData;
     }
-
+    
     public void setComicData(ComicData comicData) {
         this.comicData = comicData;
     }
-
+    
     public int getPage() {
         return page;
     }
-
+    
     public void setPage(int page) {
         this.page = page;
     }
-
+    
     public int getSumPages() {
         return sumPages;
     }
-
+    
     public void setSumPages(int sumPages) {
         this.sumPages = sumPages;
     }
-
+    
+    public TextToSpeech getTts() {
+        return tts;
+    }
+    
+    public void setTts(TextToSpeech tts) {
+        this.tts = tts;
+    }
+    
+    public UtteranceProgressListener getUtteranceProgressListener() {
+        return utteranceProgressListener;
+    }
+    
+    public void setUtteranceProgressListener(UtteranceProgressListener utteranceProgressListener) {
+        this.utteranceProgressListener = utteranceProgressListener;
+    }
+    
     public int[] getTitleTextSize() {
         return titleTextSize;
     }
-
+    
     public void setTitleTextSize(int[] titleTextSize) {
         this.titleTextSize = titleTextSize;
     }
-
+    
     public int[] getSummaryTextSize() {
         return summaryTextSize;
     }
-
+    
     public void setSummaryTextSize(int[] summaryTextSize) {
         this.summaryTextSize = summaryTextSize;
     }
-
+    
     public int[] getPageTextSize() {
         return pageTextSize;
     }
-
+    
     public void setPageTextSize(int[] pageTextSize) {
         this.pageTextSize = pageTextSize;
     }
-
+    
     public String[] getTextSizeButtonText() {
         return textSizeButtonText;
     }
-
+    
     public void setTextSizeButtonText(String[] textSizeButtonText) {
         this.textSizeButtonText = textSizeButtonText;
     }
-
+    
     public int getTextSizeIndex() {
         return textSizeIndex;
     }
-
+    
     public void setTextSizeIndex(int textSizeIndex) {
         this.textSizeIndex = textSizeIndex;
     }
-
+    
     public ComicFragmentButtonClickListener getButtonClickListener() {
         return buttonClickListener;
     }
-
+    
     public void setButtonClickListener(ComicFragmentButtonClickListener buttonClickListener) {
         this.buttonClickListener = buttonClickListener;
     }
-
+    
+    public float[] getVoice() {
+        return voice;
+    }
+    
+    public void setVoice(float[] voice) {
+        this.voice = voice;
+    }
+    
+    public int getVoiceIndex() {
+        return voiceIndex;
+    }
+    
+    public void setVoiceIndex(int voiceIndex) {
+        this.voiceIndex = voiceIndex;
+    }
+    
+    public long getStartTime() {
+        return startTime;
+    }
+    
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -244,17 +277,15 @@ public class ComicFragment extends Fragment implements TextToSpeech.OnInitListen
         textSizeButton = view.findViewById(R.id.text_size_button);  // 获取字体按钮组件
         textReadButton = view.findViewById(R.id.text_read_button);  // 获取朗读按钮组件
         
-        tts =  new TextToSpeech(requireContext(),this);
-        tts.setPitch(0.8f); //设置声音越小声音越粗，1.0是常规
+        tts = new TextToSpeech(requireContext(),this);
+        tts.setPitch(voice[1]);
         
         View activity_comicView = inflater.inflate(R.layout.activity_comic, container, false);
-
 
         utteranceProgressListener = new UtteranceProgressListener() {
             @Override
             public void onStart(String s) {
                 System.out.println("开始朗读") ;
-
             }
 
             @Override
@@ -277,6 +308,7 @@ public class ComicFragment extends Fragment implements TextToSpeech.OnInitListen
 
             }
         };
+        
         Bundle bundle = getArguments();   // 接收数据
         if (bundle != null) {
             comicData = (ComicData) bundle.getSerializable("comicData");
@@ -293,17 +325,10 @@ public class ComicFragment extends Fragment implements TextToSpeech.OnInitListen
             }
         });
 
-        textReadButton.setOnClickListener(v -> {    // 点击朗读按钮事件
-            if(textReadButton.getHint().equals("未读")){
-                textReadButton.setHint("在读");
-                textReadButton.setBackground(this.getResources().getDrawable(R.drawable.read_button_background));
-                tts.speak(comicData.getTitle()+"...   "+comicData.getSummary(),TextToSpeech.QUEUE_FLUSH, null,"1");
-
-            }else {
-                textReadButton.setHint("未读");
-                textReadButton.setBackground(this.getResources().getDrawable(R.drawable.not_read_button_background));
-                tts.stop();
-            }
+        textReadButton.setOnClickListener(v -> read()); // 点击朗读按钮事件
+        textReadButton.setOnLongClickListener(v ->  {   // 长按朗读按钮修改音色
+            choiceVoice(v);
+            return true;
         });
 
         collectionButton.setOnClickListener(v -> collectionClick()); // 点击收藏按钮事件
@@ -417,6 +442,36 @@ public class ComicFragment extends Fragment implements TextToSpeech.OnInitListen
         Intent intent = new Intent(getActivity(), MainActivity.class);  // 创建跳转到目标 Activity 的 Intent
         intent.putExtra("goWhere", "bookmark"); // 去书签Fragment
         startActivity(intent);  // 启动目标 Activity
+    }
+    
+    private void read() {   // 朗读
+        if(textReadButton.getHint().equals("未读")){
+            textReadButton.setHint("在读");
+            textReadButton.setBackground(this.getResources().getDrawable(R.drawable.read_button_background));
+            tts.speak(comicData.getTitle()+"...   "+comicData.getSummary(),TextToSpeech.QUEUE_FLUSH, null,"1");
+            
+        }else {
+            textReadButton.setHint("未读");
+            textReadButton.setBackground(this.getResources().getDrawable(R.drawable.not_read_button_background));
+            tts.stop();
+        }
+    }
+    
+    private void choiceVoice(View view) {    // 修改语音
+        AlertDialog dialog;
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
+                .setTitle("设置朗读性别")
+                .setIcon(R.mipmap.ic_launcher)
+                .setSingleChoiceItems(new String[]{"男声", "中性", "女声"}, voiceIndex, (dialog13, which) -> {
+                    voiceIndex = which;//得到被点击的序号which
+                })
+                .setPositiveButton("确定", (dialog12, which) -> {
+                    tts.setPitch(voice[voiceIndex]);    // 设置音色
+                    dialog12.dismiss();
+                })
+                .setNegativeButton("取消", (dialog1, which) -> dialog1.dismiss());
+        dialog = builder.create();
+        dialog.show();
     }
 
     @Override
