@@ -14,5 +14,6 @@
     <string name="reading">阅读中</string>
     <string name="read_hint">每天阅读1小时，你会受益一辈子</string>
     <string name="read_title">今日已经阅读</string>
+    <string name="not_read">未读</string>
 
 </resources>

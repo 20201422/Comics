@@ -103,7 +103,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/not_read_button_background"
-        android:hint="未读"
+        android:hint="@string/not_read"
         android:text=""
         android:textColor="#00FFFFFF"
         android:textColorHint="#00FFFFFF"

@@ -107,6 +107,10 @@ public class MainActivity extends AppCompatActivity {
             editor.putInt("lastDay", today.get(Calendar.DAY_OF_MONTH));
             editor.apply();
         }
+        // 项目启动，自动朗读修改为false
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean("AutoPlay", false);
+        editor.apply();
         
         // 初始化 ViewPager 和 TabLayout
         initViewPagerAndTabs();

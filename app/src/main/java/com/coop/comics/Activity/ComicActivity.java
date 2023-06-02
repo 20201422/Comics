@@ -2,6 +2,7 @@ package com.coop.comics.Activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
 import android.widget.Button;
@@ -30,10 +31,10 @@ public class ComicActivity extends AppCompatActivity implements ComicFragment.Co
     private Runnable autoScrollRunnable;
     private String[] textSizeButtonText = {"小", "中", "大"};
     private int textSizeIndex = 1; // 默认字体大小的索引值为1
-    
+
     public ComicActivity() {
     }
-    
+
     public ComicActivity(ViewPager viewPager, ComicAdapter adapter, int bookId, int stopPage,
                          Handler autoScrollHandler, Runnable autoScrollRunnable,
                          String[] textSizeButtonText, int textSizeIndex) {
@@ -46,71 +47,71 @@ public class ComicActivity extends AppCompatActivity implements ComicFragment.Co
         this.textSizeButtonText = textSizeButtonText;
         this.textSizeIndex = textSizeIndex;
     }
-    
+
     public ViewPager getViewPager() {
         return viewPager;
     }
-    
+
     public void setViewPager(ViewPager viewPager) {
         this.viewPager = viewPager;
     }
-    
+
     public ComicAdapter getAdapter() {
         return adapter;
     }
-    
+
     public void setAdapter(ComicAdapter adapter) {
         this.adapter = adapter;
     }
-    
+
     public int getBookId() {
         return bookId;
     }
-    
+
     public void setBookId(int bookId) {
         this.bookId = bookId;
     }
-    
+
     public int getStopPage() {
         return stopPage;
     }
-    
+
     public void setStopPage(int stopPage) {
         this.stopPage = stopPage;
     }
-    
+
     public Handler getAutoScrollHandler() {
         return autoScrollHandler;
     }
-    
+
     public void setAutoScrollHandler(Handler autoScrollHandler) {
         this.autoScrollHandler = autoScrollHandler;
     }
-    
+
     public Runnable getAutoScrollRunnable() {
         return autoScrollRunnable;
     }
-    
+
     public void setAutoScrollRunnable(Runnable autoScrollRunnable) {
         this.autoScrollRunnable = autoScrollRunnable;
     }
-    
+
     public String[] getTextSizeButtonText() {
         return textSizeButtonText;
     }
-    
+
     public void setTextSizeButtonText(String[] textSizeButtonText) {
         this.textSizeButtonText = textSizeButtonText;
     }
-    
+
     public int getTextSizeIndex() {
         return textSizeIndex;
     }
-    
+
     public void setTextSizeIndex(int textSizeIndex) {
         this.textSizeIndex = textSizeIndex;
     }
-    
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,11 +122,20 @@ public class ComicActivity extends AppCompatActivity implements ComicFragment.Co
         Intent intent = getIntent();
         bookId = intent.getIntExtra("bookId", 0);   // 接收到的是int型的bookId，当没接收到默认bookId为0
         stopPage = intent.getIntExtra("stopPage", -1);  // 接收传来的书签页数, 没接收到就默认是-1
-        
+
         adapter = new ComicAdapter(getSupportFragmentManager(), getComicData(), textSizeIndex, this);
 
         viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(adapter);
+        
+        // 设置回调接口给每个Fragment
+        for (int i = 0; i < adapter.getCount(); i++) {
+            Fragment fragment = adapter.getItem(i);
+            if (fragment instanceof ComicFragment) {
+                ((ComicFragment) fragment).setButtonClickListener(this);
+            }
+        }
+        
     }
 
     private List<ComicData> getComicData() {
@@ -137,20 +147,22 @@ public class ComicActivity extends AppCompatActivity implements ComicFragment.Co
 
         return comicData;
     }
-    
+
     @Override
     protected void onResume() {
         super.onResume();
-        startAutoScroll();
+        if (stopPage != -1) {
+            startAutoScroll(stopPage);
+        }
     }
-    
+
     @Override
     protected void onPause() {
         super.onPause();
         stopAutoScroll();
     }
-    
-    private void startAutoScroll() {    // 自动轮播
+
+    private void startAutoScroll(int stop) {    // 自动轮播
         autoScrollHandler = new Handler(Looper.getMainLooper());
         autoScrollRunnable = new Runnable() {
             @Override
@@ -158,26 +170,31 @@ public class ComicActivity extends AppCompatActivity implements ComicFragment.Co
                 System.out.println("下一页");
                 int currentItem = viewPager.getCurrentItem();
                 int nextItem = currentItem + 1;
-                
+
                 if (nextItem >= adapter.getCount()) {
-                    nextItem = 0; // 循环到第一个项
+//                    nextItem = 0; // 循环到第一个项
+                    // 朗读结束，自动朗读修改为false
+                    SharedPreferences settings = getSharedPreferences("MyPrefsFile", 0);
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putBoolean("AutoPlay", false);
+                    editor.apply();
                 }
-                
-                if (stopPage != -1) {   // 没有书签，不轮播
+
+                if (stop != -1) {   // 没有书签，不轮播
                     viewPager.setCurrentItem(nextItem, true);
                 }
-                
-                if (currentItem == stopPage) {   // 如果到达书签页
+
+                if (currentItem == stop) {   // 如果到达书签页
                     stopAutoScroll();   // 停止轮播
                 } else {
                     autoScrollHandler.postDelayed(this, AUTO_SCROLL_DELAY);
                 }
             }
         };
-        
+
         autoScrollHandler.postDelayed(autoScrollRunnable, AUTO_SCROLL_DELAY);
     }
-    
+
     public void stopAutoScroll() {  // 停止轮播
         if (autoScrollHandler != null && autoScrollRunnable != null) {
             autoScrollHandler.removeCallbacks(autoScrollRunnable);
@@ -215,10 +232,15 @@ public class ComicActivity extends AppCompatActivity implements ComicFragment.Co
             }
         }
     }
-    
+
     @Override
     public void onTextSizeButtonClick() {
         changeTextSize();
+    }
+    
+    @Override
+    public void onNextPageClicked() {
+        startAutoScroll(viewPager.getCurrentItem());
     }
     
 }

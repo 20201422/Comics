@@ -227,4 +227,9 @@ public class CollectionActivity extends AppCompatActivity implements ComicFragme
     public void onTextSizeButtonClick() {
         changeTextSize();
     }
+    
+    @Override
+    public void onNextPageClicked() {
+    
+    }
 }
