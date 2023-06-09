@@ -127,7 +127,7 @@ public class ComicActivity extends AppCompatActivity implements ComicFragment.Co
 
         viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(adapter);
-        
+       
         // 设置回调接口给每个Fragment
         for (int i = 0; i < adapter.getCount(); i++) {
             Fragment fragment = adapter.getItem(i);

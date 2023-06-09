@@ -52,14 +52,15 @@
                     android:id="@+id/timeTextView_title"
                     android:textSize="24sp"
                     android:textAlignment="center"
-                    android:layout_marginBottom="2dp" android:layout_marginTop="8dp"/>
+                    android:layout_marginBottom="2dp" android:layout_marginTop="8dp" android:paddingLeft="4dp"
+                    android:paddingRight="4dp"/>
             <TextView
                     android:text=""
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/timeTextView"
                     android:textSize="34sp"
-                    android:textAlignment="center"/>
+                    android:textAlignment="center" android:paddingLeft="4dp" android:paddingRight="4dp"/>
             <TextView
                     android:text="@string/read_hint"
                     android:layout_width="match_parent"

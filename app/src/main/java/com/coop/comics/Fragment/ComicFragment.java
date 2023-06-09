@@ -33,6 +33,7 @@ import com.coop.comics.R;
 
 import java.util.Locale;
 
+
 public class ComicFragment extends Fragment implements TextToSpeech.OnInitListener {
 
     ImageView imageView;    // 图片
@@ -458,6 +459,7 @@ public class ComicFragment extends Fragment implements TextToSpeech.OnInitListen
             textReadButton.setBackground(this.getResources().getDrawable(R.drawable.not_read_button_background));
             tts.stop();
         }
+        
     }
 
     private void choiceVoice(View view) {    // 修改语音
